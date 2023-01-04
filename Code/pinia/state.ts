@@ -10,13 +10,13 @@ export const Store1 = defineStore('Store1', {
         }
     },
     getters: {
-        getSex() {
+        getSex(): string {
             return this.sex
         },
         getHeight(state): number {
             return state.height *2
         },
-        getHobby() {
+        getHobby(): Array<string> {
             return this.hobby
         },
         doubleNum (state): number {
@@ -24,13 +24,13 @@ export const Store1 = defineStore('Store1', {
         }
     },
     actions: {
-        updateSex(val) {
+        updateSex(val: string) {
             this.sex = this.sex + val
         },
         addHeight() {
             this.height ++
         },
-        updateHobby(val) {
+        updateHobby(val: string) {
             this.hobby.push(val)
         }
     }
