@@ -1,0 +1,65 @@
+<template>
+    <div>
+        <el-row class="mb-4">
+            <el-button @click="clickFun1()">Default</el-button>
+            <el-button type="primary">Primary</el-button>
+            <el-button type="success">Success</el-button>
+            <el-button type="info">Info</el-button>
+            <el-button type="warning">Warning</el-button>
+            <el-button type="danger">Danger</el-button>
+            <el-button>中文</el-button>
+        </el-row>
+
+        <el-row class="mb-4">
+            <el-button plain>Plain</el-button>
+            <el-button type="primary" plain @click="$router.push('PageB')">Primary</el-button>
+            <el-button type="success" plain>Success</el-button>
+            <el-button type="info" plain>Info</el-button>
+            <el-button type="warning" plain>Warning</el-button>
+            <el-button type="danger" plain>Danger</el-button>
+        </el-row>
+
+        <el-row class="mb-4">
+            <el-button round>Round</el-button>
+            <el-button type="primary" round>Primary</el-button>
+            <el-button type="success" round>Success</el-button>
+            <el-button type="info" round>Info</el-button>
+            <el-button type="warning" round>Warning</el-button>
+            <el-button type="danger" round>Danger</el-button>
+        </el-row>
+
+        <el-row>
+            <el-button :icon="Search" circle />
+            <el-button type="primary" :icon="Edit" circle />
+            <el-button type="success" :icon="Check" circle />
+            <el-button type="info" :icon="Message" circle />
+            <el-button type="warning" :icon="Star" circle />
+            <el-button type="danger" :icon="Delete" circle />
+        </el-row>
+
+        <div class="postcss">postcss</div>
+
+        {{ Pinia1.height }}
+    </div>
+</template>
+
+<script setup lang="ts">
+import { Check, Delete, Edit, Message, Search, Star, } from '@element-plus/icons-vue'
+import { Store1 } from '../../pinia/state'
+
+const Pinia1 = Store1()
+function clickFun1() {
+    Pinia1.addHeight()
+}
+
+
+</script>
+
+<style scoped>
+.postcss {
+    width: 700px;
+    height: 20px;
+    font-size: 20px;
+    background-color: aqua;
+}
+</style>
