@@ -9,10 +9,17 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style>
+div, li, span, img {
+  box-sizing: border-box;
+}
 * {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+html, body, #app{
+  width: 100%;
+  height: 100%;
 }
 .logo {
   height: 6em;

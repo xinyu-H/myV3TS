@@ -8,46 +8,7 @@
                 <p v-for="(v, i) in rowList" v-html="v"></p>
             </div>
         </div>
-        <!-- <PageBChildChildVue></PageBChildChildVue> -->
-        <el-dialog v-model="dialog">
-            <div class="print-info" ref="print" id="printto">
-                <h2>访客单</h2>
-                <div class="pboxs">
-                    <p class="ptitle">
-                        <font>|</font> <span>访客信息</span>
-                    </p>
-                    <p><span>来访人：</span>"未填"</p>
-                    <p>
-                        <span>性别：</span>"未填"
-                    </p>
-                    <p>
-                        <span>身份证号：</span>"未填"
-                    </p>
-                    <p><span>联系方式：</span>"未填"
-                    </p>
-                    <p>
-                        <span>来访单位：</span>"未填"
-                    </p>
-                    <p><span>携带物品：</span>"未填"</p>
-                </div>
-                <div class="pboxs">
-                    <p class="ptitle">
-                        <font>|</font>
-                        <span>访问信息</span>
-                    </p>
-                    <p><span>被访人：</span>"未填"</p>
-                    <p>
-                        <span>联系方式：</span>"未填"
-                    </p>
-                    <p><span>开始时间：</span>"未填"</p>
-                    <p><span>结束时间：</span>"未填"</p>
-                </div>
-                <div class="qrcode" style='display: flex;justify-content: center;'>
-                    <div id="qrcode" ref="qrcode"></div>
-                </div>
-                <div style="width: 100%;height: 40px;"></div>
-            </div>
-        </el-dialog>
+        <PageBChildChildVue></PageBChildChildVue>
         
     </div>
 </template>

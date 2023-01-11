@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
-        path: '/PageA',
+        path: '/',
         name: 'PageA',
         component: () => import('../views/PageA.vue')
     },{
@@ -11,13 +11,21 @@ const router = createRouter({
         name: 'PageB',
         component: () => import('../views/PageB.vue')
     },{
-        path: '/',
+        path: '/PageC',
         name: 'PageC',
         component: () => import('../views/PageC.vue')
     },{
         path: '/Work1',
         name: 'Work1',
         component: () => import('../views/Work1.vue')
+    },{
+        path: '/PageD',
+        name: 'PageD',
+        component: () => import('../views/PageD.vue')
+    },{
+        path: '/PageE',
+        name: 'PageE',
+        component: () => import('../views/PageE.vue')
     }]
 })
 

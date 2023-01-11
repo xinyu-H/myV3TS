@@ -2,17 +2,17 @@
     <div>
         <el-row class="mb-4">
             <el-button @click="clickFun1()">Default</el-button>
-            <el-button type="primary">Primary</el-button>
-            <el-button type="success">Success</el-button>
-            <el-button type="info">Info</el-button>
-            <el-button type="warning">Warning</el-button>
-            <el-button type="danger">Danger</el-button>
+            <el-button type="primary" @click="$router.push('PageB')">PageB</el-button>
+            <el-button type="success" @click="$router.push('PageC')">PageC</el-button>
+            <el-button type="info" @click="$router.push('Work1')">Work1</el-button>
+            <el-button type="warning" @click="$router.push('PageD')">PageD</el-button>
+            <el-button type="danger" @click="$router.push('PageE')">PageE</el-button>
             <el-button>中文</el-button>
         </el-row>
 
         <el-row class="mb-4">
             <el-button plain>Plain</el-button>
-            <el-button type="primary" plain @click="$router.push('PageB')">Primary</el-button>
+            <el-button type="primary" plain>Primary</el-button>
             <el-button type="success" plain>Success</el-button>
             <el-button type="info" plain>Info</el-button>
             <el-button type="warning" plain>Warning</el-button>
