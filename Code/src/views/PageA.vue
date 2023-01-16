@@ -7,7 +7,7 @@
             <el-button type="info" @click="$router.push('Work1')">Work1</el-button>
             <el-button type="warning" @click="$router.push('PageD')">PageD</el-button>
             <el-button type="danger" @click="$router.push('PageE')">PageE</el-button>
-            <el-button>中文</el-button>
+            <el-button @click="$router.push('PageF')">PageF</el-button>
         </el-row>
 
         <el-row class="mb-4">
