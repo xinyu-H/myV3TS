@@ -19,7 +19,7 @@ nextTick(() => {
     setInterval(() => {
         let color = getColor()
         let snow = document.createElement('div')
-        snow.setAttribute('y', String(getRandom(1, 3)))
+        snow.setAttribute('y', String(getRandom(1, 1.5)))
         snow.setAttribute('x', String(getRandom(-0.1, 0.1, 2)))
         snow.classList.add('snow')
         snow.style.width = '10px'
@@ -35,7 +35,7 @@ nextTick(() => {
         snow.style.textShadow = `0 0 10px ${isColor.value ? color :'#FFF'}`
         snow.innerHTML = iconList[getRandom(0, 20, 1)]
         document.querySelector('.snow_box')?.appendChild(snow)
-    }, 50)
+    }, 30)
     
     let snowDom = document.querySelectorAll('.snow') as unknown as Array<HTMLElement>
     snowDom.forEach((v: HTMLElement) => {
@@ -54,7 +54,7 @@ function init () {
         })
     })
 }
-timer = setInterval(init, 25)
+timer = setInterval(init, 20)
 /**
  * 
  * @param m 

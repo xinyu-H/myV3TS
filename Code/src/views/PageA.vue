@@ -37,8 +37,6 @@
             <el-button type="danger" :icon="Delete" circle />
         </el-row>
 
-        <div class="postcss">postcss</div>
-
         {{ Pinia1.height }}
     </div>
 </template>
