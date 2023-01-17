@@ -25,6 +25,7 @@ const loder_pxtovw = pxtovw({
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   plugins: [vue()],
   css: {
     postcss: {
