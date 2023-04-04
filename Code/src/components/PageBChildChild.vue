@@ -116,7 +116,7 @@ function runBox (index: number) {
       b = scrollDiv.scrollTop
       if(a === b) {
         list.value[index].list.push(list.value[index].list.shift() as {name: string})
-        console.log('触底', scrollDiv.scrollTop)
+        // console.log('触底', scrollDiv.scrollTop)
         scrollDiv.scrollTop = scrollDiv.scrollTop - scrollDivCF.offsetHeight
       }
     }

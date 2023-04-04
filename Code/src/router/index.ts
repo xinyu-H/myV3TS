@@ -30,6 +30,10 @@ const router = createRouter({
         path: '/PageF',
         name: 'PageF',
         component: () => import('../views/PageF.vue')
+    },{
+        path: '/PageG',
+        name: 'PageG',
+        component: () => import('../views/PageG.vue')
     }]
 })
 

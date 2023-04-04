@@ -8,7 +8,7 @@
                 <p v-for="(v, i) in rowList" v-html="v"></p>
             </div>
         </div>
-        <PageBChildChildVue></PageBChildChildVue>
+        <PageBChildChildVue ref="PageBChildChildVuePage"></PageBChildChildVue>
         
     </div>
 </template>
@@ -16,6 +16,10 @@
 <script setup lang="ts">
 import { inject, nextTick, onMounted, ref } from 'vue';
 import PageBChildChildVue from './PageBChildChild.vue';
+
+
+
+
 
 let scrollTimer: any
 let scrollTopOld = 0
