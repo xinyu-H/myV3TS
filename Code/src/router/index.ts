@@ -4,8 +4,18 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
         path: '/',
+        name: 'IndexPage',
+        component: () => import('../views/IndexPage.vue'),
+    },{
+        path: '/AppIndexPage',
+        name: 'AppIndexPage',
+        component: () => import('../views/App/AppIndexPage.vue'),
+        meta: {}
+    },{
+        path: '/PageA',
         name: 'PageA',
-        component: () => import('../views/PageA.vue')
+        component: () => import('../views/PageA.vue'),
+        meta: {}
     },{
         path: '/PageB',
         name: 'PageB',

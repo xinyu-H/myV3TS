@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+div, h1, h2, h3, h4, h5, span, img, p, ul, ol, li, a {
+    box-sizing: border-box;
+}
+.padding {
+    padding: 10px;
+}
+.radius {
+    border-radius: 10px;
+}
+.flex_around {
+    display: flex;
+    justify-content: space-around;
+}
+.flex_between {
+    display: flex;
+    justify-content: space-between;
+}
+.box_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inline_block {
+    display: inline-block;
+}
+.float_left {
+    float: left;
+}
+.float_right {
+    float: right;
+}
