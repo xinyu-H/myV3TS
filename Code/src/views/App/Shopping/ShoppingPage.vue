@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>MyPage</h1>
+        <h1>ShoppingPage</h1>
     </div>
 </template>
 
@@ -8,6 +8,6 @@
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

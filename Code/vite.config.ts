@@ -34,5 +34,9 @@ export default defineConfig({
   },
   define: {
     'process.env': {}
+  },
+  server: {
+    host: '192.168.124.9',
+    port: 8888
   }
 })

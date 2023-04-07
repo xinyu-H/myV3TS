@@ -53,7 +53,7 @@ const age = inject('ageKey')
 const name = inject('nameKey')
 let reg = /\p{Unified_Ideograph}/u
 let rowWordNum = 0
-let str = `预约订餐注意事项：<br/>1.禁止<br/>2.<br/>3.<br/>`
+let str = `预约订餐注意事项预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：：<br/>1.禁止预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：预约订餐注意事项：<br/>2.<br/>3.<br/>`
 
 let paraList = str.split('<br/>')
 let numList: Array<number> = []

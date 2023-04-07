@@ -5,32 +5,20 @@ import { HttpResponseModel } from './httpType';
 import $Utils from '../utils/index'
 // 接口类型和方法
 interface BaseType{
-    baseURL:string;
-    getConfigParams():any;
-    interceptors(instance:AxiosInstance, url: string | number | undefined):any;
-    request(options: AxiosRequestConfig):any;
-}
-
-interface AxiosRequestType {
-    baseURL?: string;
-    url?: string|undefined;
-    data?: any;
-    params?: any;
-    method?: string;
-    headers?: any;
-    timeout?: number;
-    value?: any
-    cancelToken?: any
+    baseURL: string;
+    getConfigParams(): any;
+    interceptors(instance:AxiosInstance, url: string | number | undefined): any;
+    request(options: AxiosRequestConfig): any;
 }
 
 // 取消重复请求
 const CancelToken = axios.CancelToken
 // 用于存储每个请求的取消函数以及对应标识
-let sources:any = []
+let sources: any = []
 
 // 取消函数
-let removeSource = (config:any)=>{
-    for(let item in sources){
+let removeSource = (config:any) => {
+    for (let item in sources){
         if(sources[item].umet === config.url+"&"+config.method){
             sources[item].cancel('已取消重复请求，请勿重复请求')
             sources.splice(item, 1)
@@ -41,26 +29,26 @@ let removeSource = (config:any)=>{
 class AxiosHttpRequest implements BaseType{
     baseURL: string;
     timeout: number;
-    constructor(){
+    constructor (){
         this.baseURL = import.meta.env.VITE_APP_BASE_API
         this.timeout = 1500
     }
     // 配置参数
-    getConfigParams(){
+    getConfigParams (){
         const config = {
             baseURL: this.baseURL,
             timeout: this.timeout,
-            headers:{}
+            headers: {}
         }
         return config;
     }
     // 拦截设置
     interceptors(instance:AxiosInstance, url: string | number | undefined){
         // 请求拦截
-        instance.interceptors.request.use((config: InternalAxiosRequestConfig) =>{
+        instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
             // 取消重复请求
             removeSource(config)
-            config.cancelToken = new CancelToken(c =>{
+            config.cancelToken = new CancelToken(c => {
                 // 将取消函数存起来
                 sources.push({ umet: config.url+'&'+config.method, cancel: c })
             })
@@ -77,12 +65,12 @@ class AxiosHttpRequest implements BaseType{
                 config.url = url;
             }
             return config
-        }, (error:any)=>{
+        }, (error: any) => {
             return Promise.reject(error)
         })
 
         // 响应拦截
-        instance.interceptors.response.use((res: AxiosResponse) =>{
+        instance.interceptors.response.use((res: AxiosResponse) => {
             // 取消重复请求
             removeSource(res.config)
             // 关闭 Loading
@@ -114,7 +102,7 @@ class AxiosHttpRequest implements BaseType{
                 ElMessage.error(msg)
                 return Promise.resolve(res.data)
             }
-        }, (error:any) =>{
+        }, (error: any) =>{
             console.log('err' + error)
             let { message } = error;
             if (message == "Network Error") {

@@ -20,6 +20,7 @@ import './api/request'
 const app = createApp(App)
 app.provide('$Utils', Utils)
 app.provide('$Api', Api)
+app.provide('$Router', router)
 app.use(router)
 .use(ElementPlus)
 .use(Vant)
