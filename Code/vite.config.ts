@@ -39,7 +39,4 @@ export default defineConfig({
     host: '192.168.124.9',
     port: 8888
   },
-  resolve: {
-    
-  }
 })

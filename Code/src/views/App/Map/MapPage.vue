@@ -36,12 +36,14 @@ setTimeer = setTimeout(() => {
         $Utils.Alert.failToast('浏览器不支持获取当前位置')
     }
 }, 5000);
-// showPosition({
-//     coords: {
-//         longitude: 116.274114,
-//         latitude: 39.840426
-//     }
-// })
+
+// http的协议不支持获取定位，所以设置一个固定的进行测试
+showPosition({
+    coords: {
+        longitude: 116.274114,
+        latitude: 39.840426
+    }
+})
 function showPosition(position: any) {
     isShowFooter.value = true
     circleLocation.value = [+position.coords.longitude, +position.coords.latitude]
