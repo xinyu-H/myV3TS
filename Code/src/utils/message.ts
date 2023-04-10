@@ -1,6 +1,6 @@
 import { showLoadingToast, closeToast, showToast, showDialog, showConfirmDialog, closeDialog  } from 'vant';
 import successImg from '../assets/images/Base/success.png'
-import failImg from '@/assets/images/Base/fail.png'
+import failImg from '../assets/images/Base/fail.png'
 
 
 export default {

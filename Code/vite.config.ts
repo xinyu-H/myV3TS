@@ -40,8 +40,6 @@ export default defineConfig({
     port: 8888
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+    
   }
 })

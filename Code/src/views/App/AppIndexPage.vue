@@ -23,7 +23,6 @@ import { getData1ResponseModel } from '../../api/Home/HomeModel'
 import HomePage from './Home/HomePage.vue';
 import ShoppingPage from './Shopping/ShoppingPage.vue'
 import MyPage from './My/MyPage.vue';
-import { Component } from 'vue';
 
 
 // 全局接口
