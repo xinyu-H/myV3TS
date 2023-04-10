@@ -10,25 +10,59 @@ const router = createRouter({
             path: '/HomePage',
             name: 'HomePage',
             component: () => import('../views/App/Home/HomePage.vue'),
+            meta: {
+                title: '主页'
+            }
         }, {
             path: '/ShoppingPage',
             name: 'ShoppingPage',
             component: () => import('../views/App/Shopping/ShoppingPage.vue'),
+            meta: {
+                title: '选购'
+            }
         }, {
             path: '/MyPage',
             name: 'MyPage',
             component: () => import('../views/App/My/MyPage.vue'),
+            meta: {
+                title: '我的'
+            }
         }]
+    }, {
+        path: '/QrPage',
+        name: 'QrPage',
+        component: () => import('../views/App/Qr/QrPage.vue'),
+        meta: {
+            title: '二维码'
+        }
+    }, {
+        path: '/ScanPage',
+        name: 'ScanPage',
+        component: () => import('../views/App/Scan/ScanPage.vue'),
+        meta: {
+            title: '扫一扫'
+        }
+    }, {
+        path: '/MapPage',
+        name: 'MapPage',
+        component: () => import('../views/App/Map/MapPage.vue'),
+        meta: {
+            title: '地图'
+        }
     }, {
         path: '/',
         name: 'AppIndexPage',
         component: () => import('../views/App/AppIndexPage.vue'),
-        meta: {}
+        meta: {
+            is: true
+        }
     }, {
         path: '/PageA',
         name: 'PageA',
         component: () => import('../views/PageA.vue'),
-        meta: {}
+        meta: {
+            is: true
+        }
     }, {
         path: '/PageB',
         name: 'PageB',

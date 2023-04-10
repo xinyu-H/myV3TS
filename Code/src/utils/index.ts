@@ -1,6 +1,9 @@
-import Tools from "./Tools"
-import Alert from "./alert"
+import Tools from "./tools"
+import Alert from "./message"
+import AMap from "./aMap"
+
 export default {
     Tools,
-    Alert
+    Alert,
+    AMap
 }

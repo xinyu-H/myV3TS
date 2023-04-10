@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import path, { resolve } from 'path'
 import pxtovw from 'postcss-px-to-viewport'
 
 const loder_pxtovw = pxtovw({
@@ -38,5 +38,10 @@ export default defineConfig({
   server: {
     host: '192.168.124.9',
     port: 8888
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
   }
 })

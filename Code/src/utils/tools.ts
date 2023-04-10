@@ -139,12 +139,12 @@ export default {
     //         return dataURL
     //     }
     // },
-    // // base64解码 (中文乱码也可)
-    // getDecode(str: string){
-    //     return decodeURIComponent(atob(str).split('').map(function (c) {
-    //         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    //     }).join(''));
-    // },
+    // base64解码 (中文乱码也可)
+    getDecode(str: string){
+        return decodeURIComponent(atob(str).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    },
     // // 扁平数据 转 父子结构
     // mapFun (items) {
     //     const result = [];   // 存放结果集
@@ -216,14 +216,11 @@ export default {
     //         }
     //     }
     // },
-    // // 获取随机数
-    // getRandom (m, n, is) {
-    //     let num = +Math.abs(Math.random() * (n-m+1) + m-1).toFixed(2)
-    //     if (is === 2) return +(Math.random() * (n-m+1) + m-1).toFixed(2)
-    //     if (is === 1) return +Math.ceil(Math.random() * (n-m+1) + m-1)
-    //     if (num < m) return this.getRandom(m, n, is)
-    //     return num
-    // },
+    // 获取随机数
+    getRandom (m: number, n: number, is: number): number {
+        if (is) return +(Math.random() * (n-m+1) + m-1).toFixed(2)
+        return +Math.ceil(Math.random() * (n-m+1) + m-1)
+    },
     // // 图片文件转Base64
     // toBase64 (fileData) {
     //     return new Promise((resolve, reject) => {

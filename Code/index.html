@@ -4,10 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
     <title>Vite + Vue + TS</title>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script type="text/javascript">
+      
+    </script>
+<!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值"></script>  -->
+    <script>
+      //获取浏览器navigator对象的userAgent属性（浏览器用于HTTP请求的用户代理头的值）
+      var info = navigator.userAgent;
+      //通过正则表达式的test方法判断是否包含“Mobile”字符串
+      var isPhone = /mobile/i.test(info);
+      // if (isPhone) new VConsole();
+
+
+      // 高德密钥
+      window._AMapSecurityConfig = {
+        securityJsCode:'ef66a0bbcf2b28762da59b9cd05dcdcf',
+      }
+    </script>
   </body>
 </html>

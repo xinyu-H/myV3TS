@@ -2,14 +2,14 @@
     <div class="HomePage padding">
         <!-- 头部功能 -->
         <div class="HomePage_header radius flex_around ">
-            <div class="padding" v-for="(item, index) in HeaderList" :key="item.icon">
+            <div class="padding" v-for="(item, index) in HeaderList" :key="item.icon" @click="$router.push(item.path)">
                 <van-icon class="icon" :name="item.icon" />
                 <p>{{ item.name }}</p>
             </div>
         </div>
         <!-- banner 轮播图 -->
         <div class="HomePage_banner">
-            <van-swipe class="my-swipe" :autoplay="10000" @change="bannerChange">
+            <van-swipe class="my-swipe" :autoplay="100000" @change="bannerChange">
                 <van-swipe-item class="scrollDiv" v-for="(item, index) in bannerList" :key="index" :style="`background:url(${item.img}) no-repeat; background-size: 100% 100%;`">
                     <!-- <img :src="item.img" alt=""> -->
                     <div class="scrollDivC">
@@ -36,15 +36,15 @@ const HeaderList = ref<Array<{
 }>>([{
     name: '扫一扫',
     icon: 'scan',
-    path: ''
+    path: 'ScanPage'
 }, {
     name: '定位',
     icon: 'location-o',
-    path: ''
+    path: 'MapPage'
 }, {
     name: '二维码',
     icon: 'qr',
-    path: ''
+    path: 'QrPage'
 }])
 
 // banner 轮播数据
@@ -189,7 +189,7 @@ onUnmounted(() => {
     &_banner {
         width: 100%;
         height: 400px;
-        background-color: #aaa;
+        // background-color: #aaa;
         margin: 15px 0;
         .my-swipe {
             width: 100%;

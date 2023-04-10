@@ -21,7 +21,7 @@ interface RouterListModel {
 }
 const RouterList = ref<Array<RouterListModel>>([])
 router.options.routes.forEach(v => {
-    if (v.meta) RouterList.value?.push(v as unknown as RouterListModel)
+    if (v.meta?.is) RouterList.value?.push(v as unknown as RouterListModel)
 })
 // 前往具体页面
 function goPage (val: RouterListModel) {
