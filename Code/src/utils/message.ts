@@ -5,9 +5,9 @@ import failImg from '../assets/images/Base/fail.png'
 
 export default {
     // 加载提示
-    showLoadingToast: function (msg: string | '加载中...') {
+    showLoadingToast: function (msg?: string) {
         showLoadingToast({
-            message: msg,
+            message: msg || '加载中...',
             forbidClick: false,
             loadingType: 'spinner',
             duration: 0
@@ -33,7 +33,7 @@ export default {
         });
     },
     // 弹窗提示
-    alertToast: function (title: string | '标题', msg: string, showCancelButton: boolean) {
+    alertToast: function (msg: string, title?: string, showCancelButton?: boolean) {
         const beforeClose = function (action: string): Promise<boolean> {
             return new Promise((resolve) => {
                 if (action === 'confirm') {
@@ -47,7 +47,7 @@ export default {
         }
         
         return showConfirmDialog({
-            title: title,
+            title: title || '标题',
             message: msg,
             showCancelButton: showCancelButton,
             beforeClose
