@@ -5,9 +5,9 @@ import failImg from '../assets/images/Base/fail.png'
 
 export default {
     // 加载提示
-    showLoadingToast: function () {
+    showLoadingToast: function (msg: string | '加载中...') {
         showLoadingToast({
-            message: '加载中...',
+            message: msg,
             forbidClick: false,
             loadingType: 'spinner',
             duration: 0
@@ -18,16 +18,17 @@ export default {
        closeToast() 
     },
     // 成功提示
-    successToast: function (msg: string | '操作成功') {
+    successToast: function (msg?: string, img?: string, iconSize?: string) {
         showToast({
-            message: msg,
-            icon: successImg,
+            message: msg || '操作成功',
+            icon: img || successImg,
+            iconSize: iconSize
         });
     },
     // 失败提示
-    failToast: function (msg: string | '操作失败') {
+    failToast: function (msg?: string) {
         showToast({
-            message: msg,
+            message: msg || '操作失败',
             icon: failImg,
         });
     },

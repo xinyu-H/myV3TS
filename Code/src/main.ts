@@ -15,12 +15,13 @@ import Utils from './utils/index'
 // 统一接口
 import Api from './api/index'
 
-import './api/request'
+import * as echarts from 'echarts';
 
 const app = createApp(App)
 app.provide('$Utils', Utils)
 app.provide('$Api', Api)
 app.provide('$Router', router)
+app.provide('$Echarts', echarts)
 app.use(router)
 .use(ElementPlus)
 .use(Vant)

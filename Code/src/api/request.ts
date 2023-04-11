@@ -53,7 +53,7 @@ class AxiosHttpRequest implements BaseType{
                 sources.push({ umet: config.url+'&'+config.method, cancel: c })
             })
             // 添加全局的loading..
-            $Utils.Alert.showLoadingToast();
+            $Utils.Message.showLoadingToast();
             // 请求头携带token
             // config.headers['Authorization'] = 'Bearer ' + 'token666'
             config.headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -74,7 +74,7 @@ class AxiosHttpRequest implements BaseType{
             // 取消重复请求
             removeSource(res.config)
             // 关闭 Loading
-            $Utils.Alert.closeLoadingToast()
+            $Utils.Message.closeLoadingToast()
             // 未设置状态码则默认成功状态
             const code = res.data['code'] || 200;
             // 获取错误信息

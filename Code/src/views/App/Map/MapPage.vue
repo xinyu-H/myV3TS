@@ -23,7 +23,7 @@ let maxDistance = 50
 let isShowFooter = ref<boolean>(false)
 
 onMounted(() => {
-    $Utils.Alert.showLoadingToast()
+    $Utils.Message.showLoadingToast()
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
@@ -32,8 +32,8 @@ onMounted(() => {
 let setTimeer = null
 setTimeer = setTimeout(() => {
     if (!isShowFooter.value) {
-        // $Utils.Alert.closeLoadingToast()
-        $Utils.Alert.failToast('浏览器不支持获取当前位置')
+        // $Utils.Message.closeLoadingToast()
+        $Utils.Message.failToast('浏览器不支持获取当前位置')
     }
 }, 5000);
 
@@ -63,7 +63,7 @@ function showPosition(position: any) {
         // 添加点标记 及 圆区域
         addCenterDot(map,  AMap)
         addCenterCircle(map, AMap)
-        $Utils.Alert.closeLoadingToast()
+        $Utils.Message.closeLoadingToast()
         // 地图点击事件
         map.on('click', (ev: any) => {
             // circleLocation.value = [ev.lnglat.lng, ev.lnglat.lat]

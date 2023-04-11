@@ -221,16 +221,16 @@ export default {
         if (is) return +(Math.random() * (n-m+1) + m-1).toFixed(2)
         return +Math.ceil(Math.random() * (n-m+1) + m-1)
     },
-    // // 图片文件转Base64
-    // toBase64 (fileData) {
-    //     return new Promise((resolve, reject) => {
-    //         let reader = new FileReader()
-    //         reader.readAsDataURL(fileData)
-    //         reader.onload = function () {
-    //             resolve(this.result)
-    //         }
-    //     })
-    // },
+    // 图片文件转Base64
+    toBase64 (fileData: File) {
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader()
+            reader.readAsDataURL(fileData)
+            reader.onload = function () {
+                resolve(this.result)
+            }
+        })
+    },
 }
  
  
