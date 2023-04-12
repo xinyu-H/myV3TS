@@ -1,13 +1,167 @@
 <template>
-    <div>
-        <h1>ShoppingPage</h1>
+    <div class="shoppingPage padding">
+        <!-- 头部 -->
+        <div class="shoppingPage_header">
+            <div class="shoppingPage_header_text" :class="isShowSearch ? 'hideText' : ''">{{ searchTitle }}</div>
+            <van-search v-model="searchValue" class="searchItem" :class="isShowSearch ? '' : 'hideItem'" placeholder="请输入搜索关键词" />
+            <div class="searchIcon box_center" @click="clickSearch()">
+                <van-icon name="search" size="24"></van-icon>
+            </div>
+        </div>
+        <!-- 主体 -->
+        <div class="shoppingPage_content ">
+            <div class="shoppingPage_content_sidebar">
+                <van-sidebar v-model="sidebarActive" class="vantSidebar">
+                    <van-sidebar-item v-for="(item, index) in SidebarList" :key="item.index" 
+                    :title="item.title" @click="clickSidebar(item)" />
+                </van-sidebar>
+            </div>
+            <div class="shoppingPage_content_info">
+                <van-list v-model:loading="loading" :finished="finished" :immediate-check="false" class="vantList"
+                finished-text="没有更多了" @load="onLoad" >
+                    <div v-for="(item, index) in GoodList" :key="index">
+                            <GoodCar :item="item"></GoodCar>
+                    </div>
+                </van-list>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, nextTick, watch } from 'vue'
+import router from '../../../router/index';
+import { SidebarListModel, SidebarList, GoodListModel, GoodList } from './DataModel/shoppingPageData'
+import GoodCar from './components/GoodCar.vue'
 
+
+const searchValue = ref<string>()
+const isShowSearch = ref<boolean>(false)
+const searchTitle = ref<string>('')
+/**
+ * 点击搜索按钮
+ */
+function clickSearch () {
+    if (!searchValue.value) isShowSearch.value = !isShowSearch.value
+}
+
+
+// 侧边栏部分
+const sidebarActive = ref<number>(0)
+searchTitle.value = SidebarList.value[sidebarActive.value].title
+function clickSidebar (item: SidebarListModel) {
+    searchTitle.value = item.title
+}
+
+
+// 商品部分
+const loading = ref<boolean>(false);
+const finished = ref<boolean>(false);
+
+function onLoad () {
+    setTimeout(() => {
+        GoodList.value.push(...GoodList.value)
+        loading.value = false
+        if (GoodList.value.length >= 60) {
+            finished.value = true
+        }
+    }, 1000)
+}
+
+
+onMounted(() => {
+    watch(loading, (newVal) => {
+        if (newVal) {
+            setTimeout(() => {
+                let listLoadingDom = document.querySelector('.van-list__loading') as HTMLElement
+                listLoadingDom.style.width = '100%' 
+            })
+        }
+    })
+})
 </script>
 
 <style lang="scss" scoped>
-
+.shoppingPage {
+    width: 100%;
+    height: 100%;
+    &_header {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        // background-color: tan;
+        box-shadow: 0 0 15px 5px #eee;
+        overflow: hidden;
+        &_text {
+            position: absolute;
+            left: 0; top: 0;
+            width: 87%;
+            height: 100%;
+            text-align: center;
+            line-height: 100px;
+            font-size: 36px;
+            transition: transform .3s;
+        }
+        .hideText {
+            transform: translateX(-100%);
+            transition: transform .3s;
+        }
+        .searchItem {
+            height: 100%;
+            width: 87%;
+            float: left;
+            transition: transform .3s;
+        }
+        .hideItem {
+            transform: translateX(100%);
+            transition: transform .3s;
+        }
+        .searchIcon {
+            width: 13%;
+            height: 100%;
+            float: right;
+            position: relative;
+            background-color: #fff;
+        }
+    }
+    &_content {
+        width: 100%;
+        height: calc(100% - 110px);
+        margin-top: 10px;
+        display: flex;
+        &_sidebar {
+            width: 150px;
+            height: 100%;
+            // background-color: tan;
+            .vantSidebar {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                box-shadow: 0 0 15px 5px #eee;
+                .van-sidebar-item {
+                    height: 100px;
+                    padding: 0 30px;
+                    line-height: 100px;
+                }
+            }
+        }
+        &_info {
+            flex: 1;
+            height: 100%;
+            overflow: auto;
+            .vantList {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                // flex-flow: column wrap;
+                >div {
+                    width: 49%;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
 </style>

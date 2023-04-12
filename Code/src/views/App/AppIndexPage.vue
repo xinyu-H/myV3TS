@@ -1,7 +1,7 @@
 <template>
     <div class="AppIndexPage" @touchstart="touchStart()" @touchend="touchEnd()">
         <div class="AppIndexPage_content">
-            <van-swipe class="my-swipe" @change="changeSwipe" :show-indicators="false" :loop="false" ref="swipeRef">
+            <van-swipe class="my-swipe" @change="changeSwipe" :initial-swipe="tabberActive" :show-indicators="false" :loop="false" ref="swipeRef">
                 <van-swipe-item v-for="(item, index) in tabberList" :key="item.icon">
                     <HomePage v-if="item.key === 'HomePage'"></HomePage>
                     <ShoppingPage v-if="item.key === 'ShoppingPage'"></ShoppingPage>
@@ -47,7 +47,7 @@ const tabberList = ref<Array<{
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(0);
+const tabberActive = ref(1);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发

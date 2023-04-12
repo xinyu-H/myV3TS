@@ -50,6 +50,13 @@ const router = createRouter({
             title: '地图'
         }
     }, {
+        path: '/FittingPage',
+        name: 'FittingPage',
+        component: () => import('/src/views/App/Shopping/FittingPage.vue'),
+        meta: {
+            title: '地图'
+        }
+    }, {
         path: '/',
         name: 'AppIndexPage',
         component: () => import('/src/views/App/AppIndexPage.vue'),

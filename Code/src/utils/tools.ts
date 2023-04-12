@@ -139,7 +139,12 @@ export default {
     //         return dataURL
     //     }
     // },
-    // base64解码 (中文乱码也可)
+    // 
+    /**
+     * base64解码 (中文乱码也可)
+     * @param str 
+     * @returns 
+     */
     getDecode(str: string){
         return decodeURIComponent(atob(str).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
@@ -216,12 +221,22 @@ export default {
     //         }
     //     }
     // },
-    // 获取随机数
+    /**
+     * 获取随机数
+     * @param m 
+     * @param n 
+     * @param is 是否保留两位小数
+     * @returns 
+     */
     getRandom (m: number, n: number, is: number): number {
         if (is) return +(Math.random() * (n-m+1) + m-1).toFixed(2)
         return +Math.ceil(Math.random() * (n-m+1) + m-1)
     },
-    // 图片文件转Base64
+    /**
+     * 图片文件转Base64
+     * @param fileData 
+     * @returns 
+     */
     toBase64 (fileData: File) {
         return new Promise((resolve, reject) => {
             let reader = new FileReader()

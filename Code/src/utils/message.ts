@@ -4,7 +4,10 @@ import failImg from '../assets/images/Base/fail.png'
 
 
 export default {
-    // 加载提示
+    /**
+     * 加载提示
+     * @param msg 
+     */
     showLoadingToast: function (msg?: string) {
         showLoadingToast({
             message: msg || '加载中...',
@@ -13,11 +16,18 @@ export default {
             duration: 0
         })
     },
-    // 关闭加载提示
+    /**
+     * 关闭加载提示
+     */
     closeLoadingToast: function () {
        closeToast() 
     },
-    // 成功提示
+    /**
+     * 成功提示
+     * @param msg 
+     * @param img 
+     * @param iconSize 
+     */
     successToast: function (msg?: string, img?: string, iconSize?: string) {
         showToast({
             message: msg || '操作成功',
@@ -25,14 +35,23 @@ export default {
             iconSize: iconSize
         });
     },
-    // 失败提示
+    /**
+     * 失败弹窗
+     * @param msg 
+     */
     failToast: function (msg?: string) {
         showToast({
             message: msg || '操作失败',
             icon: failImg,
         });
     },
-    // 弹窗提示
+    /**
+     * 弹窗提示
+     * @param msg 
+     * @param title 
+     * @param showCancelButton 
+     * @returns 
+     */
     alertToast: function (msg: string, title?: string, showCancelButton?: boolean) {
         const beforeClose = function (action: string): Promise<boolean> {
             return new Promise((resolve) => {
