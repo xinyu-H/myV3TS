@@ -47,7 +47,7 @@ const tabberList = ref<Array<{
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(1);
+const tabberActive = ref(0);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发

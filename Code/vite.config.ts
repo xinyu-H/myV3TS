@@ -42,11 +42,7 @@ export default defineConfig({
   resolve: {
     alias: {
       //resolve.alias设置别称 解决@绝对路径引入问题
-      "@": path.resolve(__dirname, 'src'),
-      "@assets": path.resolve(__dirname, "src/assets"),
-      "@components": path.resolve(__dirname, "src/components"),
-      "@images": path.resolve(__dirname, "src/assets/images"),
-      "@views": path.resolve(__dirname, "src/views"),
+      "@": path.resolve(__dirname, 'src')
     },
   }
 })

@@ -23,6 +23,7 @@
                             <GoodCar :item="item"></GoodCar>
                     </div>
                 </van-list>
+                <van-back-top bottom="10vh" offset="500" target=".shoppingPage_content_info" />
             </div>
         </div>
     </div>

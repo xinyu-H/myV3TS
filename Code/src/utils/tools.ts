@@ -228,7 +228,7 @@ export default {
      * @param is 是否保留两位小数
      * @returns 
      */
-    getRandom (m: number, n: number, is: number): number {
+    getRandom (m: number, n: number, is?: number): number {
         if (is) return +(Math.random() * (n-m+1) + m-1).toFixed(2)
         return +Math.ceil(Math.random() * (n-m+1) + m-1)
     },

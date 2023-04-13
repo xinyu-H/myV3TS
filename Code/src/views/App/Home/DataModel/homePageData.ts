@@ -1,7 +1,7 @@
 import { ref } from 'vue'
-import bannerImg1 from '@assets/images/Home/1.jpg'
-import bannerImg3 from '@assets/images/Home/3.jpg'
-import bannerImg4 from '@assets/images/Home/4.jpg'
+import bannerImg1 from '@/assets/images/Home/1.jpg'
+import bannerImg3 from '@/assets/images/Home/3.jpg'
+import bannerImg4 from '@/assets/images/Home/4.jpg'
 
 
 // 头部功能数据
@@ -104,7 +104,6 @@ export const bannerList = ref<Array<BannerListModel>>([{
 }])
 
 // 功能区
-// 功能区
 export interface ItemsListModel {
     name: string,
     icon: string,
@@ -112,6 +111,10 @@ export interface ItemsListModel {
 }
 export const ItemsList = ref<Array<ItemsListModel>>([{
     name: '烟花',
+    icon: 'fire-o',
+    color: 'red'
+}, {
+    name: '群烟',
     icon: 'fire-o',
     color: 'red'
 }, {

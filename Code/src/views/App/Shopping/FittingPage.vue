@@ -1,10 +1,10 @@
 <template>
     <div class="FittingPage">
         <div class="shirt">
-            <img src="@assets/images/Fitting/t-shirt.png" loading="lazy">
+            <img src="@/assets/images/Fitting/t-shirt.png" loading="lazy">
             <div class="shirt__overlay">
                 <div class="shirt__overlay__pattern" :style="{backgroundImage: `url(${bgImg})`}"></div>
-                <img src="@assets/images/Fitting/t-shirt-overlay-70c.png">
+                <img src="@/assets/images/Fitting/t-shirt-overlay-70c.png">
             </div>
         </div>
         <div class="preview">
@@ -17,36 +17,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import swatch1 from '@assets/images/Fitting/swatch1-preview.png'
-import swatch2 from '@assets/images/Fitting/swatch2-preview.png'
-import swatch3 from '@assets/images/Fitting/swatch3-preview.png'
-import swatch4 from '@assets/images/Fitting/swatch4-preview.png'
-import swatch5 from '@assets/images/Fitting/swatch5-preview.png'
-import swatch6 from '@assets/images/Fitting/swatch6-preview.png'
-import swatch7 from '@assets/images/Fitting/swatch7-preview.png'
-import swatch8 from '@assets/images/Fitting/swatch8-preview.png'
-
-
-interface ImgListModel {
-    src: string
-}
-const imgList = ref<Array<ImgListModel>>([{
-    src: swatch1
-}, {
-    src: swatch2
-}, {
-    src: swatch3
-}, {
-    src: swatch4
-}, {
-    src: swatch5
-}, {
-    src: swatch6
-}, {
-    src: swatch7
-}, {
-    src: swatch8
-}, ])
+import { ImgListModel, imgList } from './DataModel/fittingPageData'
 const bgImg = ref<string>('')
 const activeColor = ref<number>(0)
 /**

@@ -1,10 +1,10 @@
 import { ref } from 'vue'
-import photo1 from '@assets/images/Shopping/1.jpg'
-import photo2 from '@assets/images/Shopping/2.jpg'
-import photo3 from '@assets/images/Shopping/3.jpg'
-import photo4 from '@assets/images/Shopping/4.jpg'
-import photo5 from '@assets/images/Shopping/5.jpg'
-import photo6 from '@assets/images/Shopping/6.jpg'
+import photo1 from '@/assets/images/Shopping/1.jpg'
+import photo2 from '@/assets/images/Shopping/2.jpg'
+import photo3 from '@/assets/images/Shopping/3.jpg'
+import photo4 from '@/assets/images/Shopping/4.jpg'
+import photo5 from '@/assets/images/Shopping/5.jpg'
+import photo6 from '@/assets/images/Shopping/6.jpg'
 
 // 侧边栏部分
 export interface SidebarListModel {
