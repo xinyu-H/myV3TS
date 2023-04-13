@@ -81,6 +81,7 @@ function runBox(index: number) {
 let isShake = ref<boolean>(false)
 let showOverlay = ref<boolean>(false)
 let fireworkSetInter: any = null
+let fireworkSetTime: any = null
 
 // 点击功能区
 function clickItems(item: ItemsListModel) {
@@ -90,11 +91,8 @@ function clickItems(item: ItemsListModel) {
             (document.querySelector('.canvasOverlay') as HTMLElement).style.background = 'rgba(0, 0, 0, 0)'
             new (FireworkData.Fireworks as any)();
             startFirewoke()
-            setTimeout(() => {
+            fireworkSetTime = setTimeout(() => {
                 showOverlay.value = false
-                // let canvasOverlay = document.querySelector('.canvasOverlay')
-                // let canvasDom = canvasOverlay?.querySelector('canvas') as HTMLCanvasElement
-                // canvasOverlay?.removeChild(canvasDom)
             }, 4000)
         })
     }
@@ -136,6 +134,7 @@ function clickItems(item: ItemsListModel) {
 watch(showOverlay, (newVal) => {
     if (!newVal) {
         clearInterval(fireworkSetInter)
+        clearTimeout(fireworkSetTime)
         window.cancelAnimationFrame(FireworkData.self.stop)
         let canvasOverlay = document.querySelector('.canvasOverlay')
         let canvasDom = canvasOverlay?.querySelector('canvas') as HTMLCanvasElement
