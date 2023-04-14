@@ -30,17 +30,13 @@ function initScan () {
 }
 
 function stratScan (this: any) {
-    // 设置宽度为最小边的百分之64%
-    let qrboxFunction = function(viewfinderWidth: number, viewfinderHeight: number) {
-        let minEdgePercentage = 0.64; // 64%
-        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-        let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
-        return {
-            width: qrboxSize,
-            height: qrboxSize
-        };
-    }
-    const config = { fps: 10, qrbox: qrboxFunction };
+    const config = {
+        fps: 10, 
+        qrbox: {
+            width: 300,
+            height: 300
+        } 
+    };
     const qrCodeSuccessCallback = (decodedText: any, decodedResult: any) => {
         stopScan(decodedText);
     };
@@ -48,7 +44,7 @@ function stratScan (this: any) {
         
     };
     qrcodeDom?.start({ 
-            facingMode: { exact: "environment"} 
+        facingMode: { exact: "environment"} 
     }, 
         config, 
         qrCodeSuccessCallback, 
@@ -93,7 +89,7 @@ function stopScan(text?: any) {
 
 <style lang="scss" scoped>
 #qrcode-reader {
-    width: 700px;
-    height: 700px;
+    width: 100%;
+    height: 100%;
 }
 </style>
