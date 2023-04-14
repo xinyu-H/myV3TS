@@ -1,5 +1,5 @@
 <template>
-    <div class="scanPage padding box_center">
+    <div class="scanPage box_center">
         <Qrcode @scanResult="scanResult"></Qrcode>
     </div>
 </template>
@@ -24,5 +24,6 @@ function scanResult(text: any) {
 .scanPage {
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, .5);
 }
 </style>
