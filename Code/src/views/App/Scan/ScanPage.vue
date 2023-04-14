@@ -5,12 +5,18 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue';
 import Qrcode from './componetns/Qrcode.vue';
 import router from '@/router';
 
+const $Utils: any = inject('$Utils')
+
 function scanResult(text: any) {
     sessionStorage.setItem('result', text)
-    router.go(-1);
+    $Utils.Message.alertToast(text).then(() => {
+        router.go(-1);
+    })
+    
 }
 </script>
 
