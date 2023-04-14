@@ -1,5 +1,7 @@
 <template>
-    <div id="qrcode-reader"></div>
+    <div class="qrcode">
+        <div id="qrcode-reader"></div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -88,8 +90,9 @@ function stopScan(text?: any) {
 </script>
 
 <style lang="scss" scoped>
-#qrcode-reader {
+.qrcode {
     width: 100%;
     height: 100%;
 }
+
 </style>
