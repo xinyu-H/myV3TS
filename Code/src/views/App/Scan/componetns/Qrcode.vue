@@ -1,5 +1,5 @@
 <template>
-    <div class="qrcode">
+    <div class="qrcode box_center">
         <div id="qrcode-reader"></div>
     </div>
 </template>
