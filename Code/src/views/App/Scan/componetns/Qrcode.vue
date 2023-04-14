@@ -93,7 +93,7 @@ function stopScan(text?: any) {
 
 <style lang="scss" scoped>
 #qrcode-reader {
-    width: 100%;
-    height: 500px;
+    width: 300px;
+    height: 300px;
 }
 </style>
