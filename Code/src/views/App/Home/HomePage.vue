@@ -103,7 +103,7 @@ function clickItems(item: ItemsListModel) {
             new (FireworkData.Fireworks as any)();
             fireworkSetInter = setInterval(() => {
                 startFirewoke()
-            }, 600)
+            }, $Utils.Tools.getRandom(800, 1000))
         })
     }
     if (item.icon === 'bell') {
@@ -199,6 +199,9 @@ function stopRunChart() {
 onUnmounted(() => {
     clearInterval(timer)
     clearInterval(intervalTimer)
+    clearInterval(fireworkSetInter)
+    clearTimeout(fireworkSetTime)
+    window.cancelAnimationFrame(FireworkData.self.stop)
 })
 </script>
 

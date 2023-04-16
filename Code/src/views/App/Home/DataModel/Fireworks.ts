@@ -1,7 +1,16 @@
 import Tools from '@/utils/tools'
 
 var self: any = {};
-var hitTest = function (x1: number, y1: number, w1: any, h1: any, x2: number, y2: number, w2: number, h2: number) { return !(x1 + w1 < x2 || x2 + w2 < x1 || y1 + h1 < y2 || y2 + h2 < y1); };
+var burstPlayer = new Audio('https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/burst2.mp3')
+var liftPlayer = new Audio('https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/lift2.mp3')
+var createPlayer = function (url: string) {
+    let player = new Audio(url)
+    player.play()
+    return player
+}
+var hitTest = function (x1: number, y1: number, w1: any, h1: any, x2: number, y2: number, w2: number, h2: number) {
+    return !(x1 + w1 < x2 || x2 + w2 < x1 || y1 + h1 < y2 || y2 + h2 < y1); 
+};
 var Fireworks = function () {
     window.requestAnimationFrame = function () {
         return window.requestAnimationFrame || 
@@ -17,25 +26,25 @@ var Fireworks = function () {
         self.canvas.width = self.cw = window.innerWidth;
         self.canvas.height = self.ch = window.innerHeight;
         self.particles = [];
-        self.partCount = 500;                   // 烟花数量
+        self.partCount = 600;                   // 烟花数量
         self.fireworks = [];
         self.mx = self.cw / 5;
         self.my = self.ch / 5;
         self.currentHue = 30;
         self.partSpeed = 4;                     // 烟花大小
-        self.partSpeedVariance = 8;            // 烟花大小
-        self.partWind = 100;                    // 烟花绽放后的曲度
+        self.partSpeedVariance = 8;             // 烟花大小
+        self.partWind = 120;                    // 烟花绽放后的曲度
         self.partFriction = 6;                  // 烟花大小
         self.partGravity = 1;                   // 绽放方向
         self.hueMin = 0;
         self.hueMax = 360;
         self.fworkSpeed = 3;                    // 发射速度
-        self.fworkAccel = .5;
-        self.hueVariance = 60;                  // 烟花颜色数量
+        self.fworkAccel = .3;
+        self.hueVariance = 20;                  // 烟花颜色数量
         self.flickerDensity = 20;               // 闪烁密度
         self.showShockwave = true;
         self.showTarget = false;
-        self.clearAlpha = 20;                   // 尾焰长度，发射及烟花
+        self.clearAlpha = 15;                   // 尾焰长度，发射及烟花
         self.stop = '';
 
         (document.querySelector('.canvasOverlay') as HTMLElement).appendChild(self.canvas);
@@ -57,6 +66,8 @@ var Fireworks = function () {
      * @param hue 
      */
     self.createParticles = function (x: any, y: any, hue: number) {
+        burstPlayer.play()
+        // createPlayer('https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/burst2.mp3')
         var countdown = self.partCount;
         while (countdown--) {
             var newParticle = {
@@ -73,9 +84,9 @@ var Fireworks = function () {
                 gravity: self.partGravity / 2,
                 hue: Tools.getRandom(hue - self.hueVariance, hue + self.hueVariance),
                 brightness: Tools.getRandom(50, 80),
-                alpha: Tools.getRandom(40, 100) / 100,
+                alpha: Tools.getRandom(40, 100) / 50,
                 decay: Tools.getRandom(10, 50) / 1000,
-                wind: (Tools.getRandom(0, self.partWind) - (self.partWind / 2)) / 25,
+                wind: (Tools.getRandom(0, self.partWind) - (self.partWind / 2)) / 20,
                 lineWidth: self.lineWidth
             };
             self.particles.push(newParticle);
@@ -143,6 +154,8 @@ var Fireworks = function () {
      * @param targetY 
      */
     self.createFireworks = function (startX: number, startY: number, targetX: number, targetY: number) {
+        liftPlayer.play()
+        // createPlayer('https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/lift2.mp3')
         var newFirework = {
             x: startX,
             y: startY,
