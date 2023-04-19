@@ -46,6 +46,15 @@ export default {
         });
     },
     /**
+     * 轻提示
+     * @param msg 
+     */
+    showToast: function (msg: string) {
+        showToast({
+            message: msg
+        })
+    },
+    /**
      * 弹窗提示
      * @param msg 
      * @param title 

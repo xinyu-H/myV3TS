@@ -84,7 +84,7 @@ let fireworkSetInter: any = null
 let fireworkSetTime: any = null
 
 // 点击功能区
-function clickItems(item: ItemsListModel) {
+async function clickItems(item: ItemsListModel) {
     if (item.name === '烟花') {
         showOverlay.value = true
         nextTick(() => {
@@ -117,15 +117,9 @@ function clickItems(item: ItemsListModel) {
         }, 3000)
     }
     if (item.icon === 'photograph') {
-        let input = document.createElement('input')
-        input.setAttribute('type', 'file')
-        input.setAttribute('id', 'file')
-        input.setAttribute('accept', 'image/*')
-        input.click()
-        input.onchange = async function (e: Event) {
-            let target = e.target as HTMLInputElement
-            $Utils.Message.successToast('', await $Utils.Tools.toBase64((target.files as FileList)[0]), '100')
-        }
+        await $Utils.Tools.uploadImg((res: string) => {
+            $Utils.Message.successToast('', res, '100')
+        })
     }
     if (item.icon === 'phone') {
         location.href = `tel://12345`
