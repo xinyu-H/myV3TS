@@ -1,7 +1,8 @@
 <template>
-    <div class="AppIndexPage" @touchstart="touchStart()" @touchend="touchEnd()">
+    <div class="AppIndexPage">
         <div class="AppIndexPage_content">
-            <van-swipe class="my-swipe" @change="changeSwipe" :initial-swipe="tabberActive" :show-indicators="false" :loop="false" ref="swipeRef">
+            <van-swipe class="my-swipe" @change="changeSwipe" :initial-swipe="tabberActive" :show-indicators="false" 
+            :touchable="Store.isSwiperSlide" :loop="false" ref="swipeRef">
                 <van-swipe-item v-for="(item, index) in tabberList" :key="item.icon">
                     <HomePage v-if="item.key === 'HomePage'"></HomePage>
                     <ShoppingPage v-if="item.key === 'ShoppingPage'"></ShoppingPage>
@@ -23,8 +24,9 @@ import { getData1ResponseModel } from '../../api/Home/HomeModel'
 import HomePage from './Home/HomePage.vue';
 import ShoppingPage from './Shopping/ShoppingPage.vue'
 import MyPage from './My/MyPage.vue';
+import { Store1 } from '@/pinia/state';
 
-
+const Store = Store1()
 // 全局接口
 const $Api: any = inject('$Api')
 const $Router: any = inject('$Router')
@@ -47,7 +49,7 @@ const tabberList = ref<Array<{
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(2);
+const tabberActive = ref(0);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发
@@ -67,18 +69,6 @@ onMounted(() => {
     // })
 })
 
-
-
-let setTimer: any = null
-function touchStart () {
-    setTimer = setTimeout(() => {
-        clearTimeout(setTimer)
-        $Router.push('IndexPage')
-    }, 5000)
-}
-function touchEnd () {
-    clearTimeout(setTimer)
-}
 </script>
 
 <style lang="scss" scoped>

@@ -114,9 +114,13 @@ export const ItemsList = ref<Array<ItemsListModel>>([{
     icon: 'fire-o',
     color: 'red'
 }, {
+    name: '签名',
+    icon: 'edit',
+    color: '#993'
+}, {
     name: '群烟',
     icon: 'fire-o',
-    color: 'red'
+    color: '#900'
 }, {
     name: '振动',
     icon: 'bell',

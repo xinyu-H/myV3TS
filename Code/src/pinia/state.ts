@@ -6,7 +6,8 @@ export const Store1 = defineStore('Store1', {
         return {
             sex: '男',
             height: 170,
-            hobby: ['唱', '跳', 'rap']
+            hobby: ['唱', '跳', 'rap'],
+            isSwiperSlide: true
         }
     },
     getters: {
@@ -32,6 +33,9 @@ export const Store1 = defineStore('Store1', {
         },
         updateHobby(val: string) {
             this.hobby.push(val)
+        },
+        updateIsSwiperSlide() {
+            this.isSwiperSlide = !this.isSwiperSlide
         }
     }
 })

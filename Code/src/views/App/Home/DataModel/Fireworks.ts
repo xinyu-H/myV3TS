@@ -47,7 +47,7 @@ var Fireworks = function () {
         self.clearAlpha = 15;                   // 尾焰长度，发射及烟花
         self.stop = '';
 
-        (document.querySelector('.canvasOverlay') as HTMLElement).appendChild(self.canvas);
+        (document.querySelector('.fireworkOverlay') as HTMLElement).appendChild(self.canvas);
         self.ctx = self.canvas.getContext('2d');
         self.ctx.lineCap = 'round';
         self.ctx.lineJoin = 'round';

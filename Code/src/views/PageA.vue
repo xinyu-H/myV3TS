@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { Check, Delete, Edit, Message, Search, Star, } from '@element-plus/icons-vue'
-import { Store1 } from '../../pinia/state'
+import { Store1 } from '../pinia/state'
 
 const Pinia1 = Store1()
 function clickFun1() {

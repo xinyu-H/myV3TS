@@ -103,9 +103,6 @@ async function toggleImg () {
                 margin-left: 10px;
                 flex: 1;
             }
-            >.icon2 {
-                
-            }
         }
     }
 }

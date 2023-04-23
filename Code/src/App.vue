@@ -14,4 +14,7 @@ html, body, #app{
   height: 100%;
   color: #333;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 </style>
