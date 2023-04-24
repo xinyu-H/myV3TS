@@ -2,10 +2,11 @@
     <div class="AppIndexPage">
         <div class="AppIndexPage_content">
             <van-swipe class="my-swipe" @change="changeSwipe" :initial-swipe="tabberActive" :show-indicators="false" 
-            :touchable="Store.isSwiperSlide" :loop="false" ref="swipeRef">
+            :loop="false" ref="swipeRef">
                 <van-swipe-item v-for="(item, index) in tabberList" :key="item.icon">
                     <HomePage v-if="item.key === 'HomePage'"></HomePage>
                     <ShoppingPage v-if="item.key === 'ShoppingPage'"></ShoppingPage>
+                    <StarryPage v-if="item.key === 'StarryPage'"></StarryPage>
                     <MyPage v-if="item.key === 'MyPage'"></MyPage>
                 </van-swipe-item>
             </van-swipe>
@@ -23,10 +24,9 @@ import { ref, onMounted, inject } from 'vue'
 import { getData1ResponseModel } from '../../api/Home/HomeModel'
 import HomePage from './Home/HomePage.vue';
 import ShoppingPage from './Shopping/ShoppingPage.vue'
+import StarryPage from './Starry/StarryPage.vue';
 import MyPage from './My/MyPage.vue';
-import { Store1 } from '@/pinia/state';
 
-const Store = Store1()
 // 全局接口
 const $Api: any = inject('$Api')
 const $Router: any = inject('$Router')
@@ -44,12 +44,16 @@ const tabberList = ref<Array<{
     icon: 'shopping-cart-o',
     key: 'ShoppingPage'
 }, {
+    name: '星空',
+    icon: 'coupon-o',
+    key: 'StarryPage'
+}, {
     name: '我的',
     icon: 'friends-o',
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(0);
+const tabberActive = ref(2);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发

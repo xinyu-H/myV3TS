@@ -3,8 +3,6 @@ import Tools from '@/utils/tools'
 import Message from '@/utils/message';
 import { Store1 } from '@/pinia/state'
 
-const Store = Store1()
-
 export interface AutogModel {
     class: string,//实例化的class
     id: string,//canvas的ID
@@ -75,7 +73,6 @@ export const Autog = {
         
         // 初始化
         const init = (event: any) => {
-            Store.updateIsSwiperSlide()
             // 获取偏移量及坐标
             const {
                 offsetX,
@@ -121,7 +118,6 @@ export const Autog = {
         }
         // 结束绘制
         const cloaseDraw = () => {
-            Store.updateIsSwiperSlide()
             // 结束绘制
             ctx.closePath()
             // 移除鼠标移动或手势移动监听器

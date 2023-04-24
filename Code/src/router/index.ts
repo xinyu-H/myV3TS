@@ -21,6 +21,13 @@ const router = createRouter({
                 title: '选购'
             }
         }, {
+            path: '/StarryPage',
+            name: 'StarryPage',
+            component: () => import('/src/views/App/Starry/StarryPage.vue'),
+            meta: {
+                title: '星空'
+            }
+        }, {
             path: '/MyPage',
             name: 'MyPage',
             component: () => import('/src/views/App/My/MyPage.vue'),
