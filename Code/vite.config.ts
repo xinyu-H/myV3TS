@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path, { resolve } from 'path'
 import pxtovw from 'postcss-px-to-viewport'
+import viteCompression from 'vite-plugin-compression'
 
 const loder_pxtovw = pxtovw({
   unitToConvert: 'px', // 需要转换的单位，默认为"px"
@@ -44,5 +45,14 @@ export default defineConfig({
       //resolve.alias设置别称 解决@绝对路径引入问题
       "@": path.resolve(__dirname, 'src')
     },
+  },
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,         // 生产环境清空 console.log
+        drop_debugger: true
+      }
+    }
   }
 })
