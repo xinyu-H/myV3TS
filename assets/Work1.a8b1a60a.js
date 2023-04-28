@@ -1,0 +1,1 @@
+import{d as s,c as a,o as d,p as e,k as t,b as o}from"./index.60c936b2.js";import{_ as p}from"./houcdc0426e.js";const i=[(s=>(e("data-v-823f58d5"),s=s(),t(),s))((()=>o("div",{class:"test"},[o("div"),o("div")],-1)))],r=p(s({__name:"Work1",setup:s=>(s,e)=>(d(),a("div",null,i))}),[["__scopeId","data-v-823f58d5"]]);export{r as default};

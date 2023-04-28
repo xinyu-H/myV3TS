@@ -20,12 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted, inject, nextTick } from 'vue'
 import { getData1ResponseModel } from '../../api/Home/HomeModel'
 import HomePage from './Home/HomePage.vue';
 import ShoppingPage from './Shopping/ShoppingPage.vue'
 import StarryPage from './Starry/StarryPage.vue';
 import MyPage from './My/MyPage.vue';
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
 
 // 全局接口
 const $Api: any = inject('$Api')
@@ -53,7 +54,7 @@ const tabberList = ref<Array<{
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(2);
+const tabberActive = ref(1);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发
@@ -71,7 +72,17 @@ onMounted(() => {
     // }).then((res: getData1ResponseModel) => {
     //     console.log(res)
     // })
+    nextTick(() => {
+       if (sessionStorage.getItem('tabActive')) {
+            tabberActive.value = Number(sessionStorage.getItem('tabActive'))
+        } 
+    })
+    
 })
+onBeforeRouteLeave((to, from) => {
+    sessionStorage.setItem('tabActive', tabberActive.value as unknown as string)
+})
+
 
 </script>
 

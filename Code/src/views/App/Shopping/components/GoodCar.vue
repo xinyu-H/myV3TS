@@ -3,7 +3,7 @@
         <div class="content_info_box radius">
             <img :src="item.img" alt="" @click="clickInfoBox()">
             <div class="info_box_info padding">
-                <van-text-ellipsis rows="2" :content="item.name" expand-text="展开" collapse-text=" 收起" />
+                <van-text-ellipsis rows="2" :content="item.name" @click-action="clickAction()" expand-text="展开" collapse-text=" 收起" />
                 <p class="info_evaluate" v-if="item.evaluate">"{{ item.evaluate }}"</p>
                 <p class="info_price">
                     <span>￥{{ item.price }}</span>
@@ -19,16 +19,24 @@
 
 <script setup lang="ts">
 import router from '../../../../router/index';
-import { ref, defineProps } from 'vue'
-import { SidebarListModel, SidebarList, GoodListModel, GoodList } from '../DataModel/shoppingPageData'
+import { ref, defineProps, defineEmits, inject, nextTick } from 'vue'
 
 const Props = defineProps(['item'])
 /**
  * 点击商品模块
- * @param item 
+ * 
  */
- function clickInfoBox() {
+ function clickInfoBox () {
     router.push('FittingPage')
+}
+
+let initStyle: Function = inject('initStyle') as Function
+let setLoading: Function = inject('setLoading') as Function
+function clickAction () {
+    setTimeout(() => {
+        initStyle()
+        setLoading()
+    })
 }
 
 

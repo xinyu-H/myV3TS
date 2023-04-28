@@ -5,6 +5,7 @@ import photo3 from '@/assets/images/Shopping/3.jpg'
 import photo4 from '@/assets/images/Shopping/4.jpg'
 import photo5 from '@/assets/images/Shopping/5.jpg'
 import photo6 from '@/assets/images/Shopping/6.jpg'
+import photo7 from '@/assets/images/Shopping/7.jpg'
 
 // 侧边栏部分
 export interface SidebarListModel {
@@ -93,5 +94,14 @@ export const GoodList = ref<Array<GoodListModel>>([{
     evaluate: '动画风，我的爱',
     star: 4,
     merchant: 'HELLO KOMA潮流品牌店',
+    sales: 125
+}, {
+    name: '2023国外热卖中国12生肖虎印T恤，欧美流行文化奈秀nyshow黑白T恤',
+    price: '69.00',
+    originalCost: '89.00',
+    img: photo7,
+    evaluate: '',
+    star: 4,
+    merchant: '奈秀 NYSHOW',
     sales: 125
 }])

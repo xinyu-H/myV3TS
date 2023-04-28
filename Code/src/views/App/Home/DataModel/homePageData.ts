@@ -133,6 +133,14 @@ export const ItemsList = ref<Array<ItemsListModel>>([{
     name: '通话',
     icon: 'phone',
     color: 'green'
+}, {
+    name: '',
+    icon: '',
+    color: ''
+}, {
+    name: '',
+    icon: '',
+    color: ''
 }])
 
 // Echarts
