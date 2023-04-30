@@ -7,7 +7,8 @@ export const Store1 = defineStore('Store1', {
             sex: '男',
             height: 170,
             hobby: ['唱', '跳', 'rap'],
-            isSwiperSlide: true
+            isSwiperSlide: true,
+            isShowBackTop: true,            // 是否显示返回顶部按钮
         }
     },
     getters: {
@@ -36,6 +37,10 @@ export const Store1 = defineStore('Store1', {
         },
         updateIsSwiperSlide() {
             this.isSwiperSlide = !this.isSwiperSlide
-        }
+        },
+        updateIsShowBackTop(val: boolean) {
+            this.isShowBackTop = val
+        },
+        
     }
 })

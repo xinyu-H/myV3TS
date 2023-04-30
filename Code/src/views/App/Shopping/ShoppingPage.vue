@@ -24,7 +24,7 @@
                         <GoodCard :item="item" :index="index"></GoodCard>
                     </div>
                 </van-list>
-                <van-back-top bottom="10vh" offset="500" target=".vantList" />
+                <van-back-top v-if="Store.isShowBackTop" bottom="10vh" offset="500" target=".vantList" />
             </div>
         </div>
     </div>
@@ -35,7 +35,9 @@ import { ref, onMounted, nextTick, watch, provide , inject } from 'vue'
 import router from '../../../router/index';
 import { SidebarListModel, SidebarList, GoodListModel, GoodList } from './DataModel/shoppingPageData'
 import GoodCard from './components/GoodCar.vue'
+import { Store1 } from '@/pinia/state'
 
+const Store = Store1()
 const searchValue = ref<string>()
 const isShowSearch = ref<boolean>(false)
 const searchTitle = ref<string>('')
@@ -59,9 +61,9 @@ const finished = ref<boolean>(false);
 
 function onLoad() {
     setTimeout(() => {
-        GoodList.value.push(...GoodList.value)
         loading.value = false
-        if (GoodList.value.length >= 60) {
+        GoodList.value.push(...GoodList.value)
+        if (GoodList.value.length >= 50) {
             finished.value = true
         }
         nextTick(initStyle)

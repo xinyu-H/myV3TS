@@ -18,7 +18,11 @@ const Tools = {
         }
         return search;
     },
-    // 字符串格式化(%s )
+    /**
+     * 字符串格式化(%s )
+     * @param str 
+     * @returns 
+     */
     sprintf: function(str: string) {
         let args = arguments, flag = true, i = 1;
         str = str.replace(/%s/g, function () {
@@ -30,13 +34,6 @@ const Tools = {
             return arg;
         });
         return flag ? str : '';
-    },
-    // 转换字符串，undefined,null等转化为""
-    praseStrEmpty: function(str: string) {
-        if (!str || str == "undefined" || str == "null") {
-            return "";
-        }
-        return str;
     },
     /**
     * 参数处理
@@ -63,35 +60,44 @@ const Tools = {
         }
         return result
     },
-    // 压缩图片
-    image2Base64: function(img: any, size = 0.7): string {
-        var canvas = document.createElement('canvas')
-        var scale = 1
-        if (img.width > 1280 || img.height > 1280) {
-            if (img.width > img.height) {
-                scale = 1280 / img.width
-            } else {
-                scale = 1280 / img.height
+    /**
+     * 压缩图片
+     * @param url 
+     * @param size 
+     * @returns 
+     */
+    image2Base64: function(url: string, size = 0.7): Promise<string> {
+        return new Promise((resolve, reject) => {
+            var img = new Image()
+            img.src = url
+            img.onload = () => {
+                var canvas = document.createElement('canvas')
+                var scale = 1
+                if (img.width > 1280 || img.height > 1280) {
+                    if (img.width > img.height) {
+                        scale = 1280 / img.width
+                    } else {
+                        scale = 1280 / img.height
+                    }
+                }
+                if (scale != 1) {
+                    //按最大高度等比缩放
+                    img.width *= scale
+                    img.height *= scale
+                }
+                canvas.width = img.width
+                canvas.height = img.width * (img.height / img.width)
+                var ctx = canvas.getContext('2d')
+                ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+                let dataURL = canvas.toDataURL('image/jpeg', size)
+                if (dataURL.length / 1024 > 10000) {
+                    //如果输出大于1m 就递归直到输出小于1M才行
+                    return this.image2Base64(url, ((size / 2).toFixed(1) as unknown as number) * 1)
+                } else {
+                    resolve(dataURL)
+                }
             }
-        }
-        if (scale != 1) {
-            //按最大高度等比缩放
-            img.width *= scale
-            img.height *= scale
-        }
-        canvas.width = img.width
-        canvas.height = img.width * (img.height / img.width)
-        var ctx = canvas.getContext('2d')
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
-        let dataURL = canvas.toDataURL('image/jpeg', size)
-
-        if (dataURL.length / 1024 > 10000) {
-            //如果输出大于1m 就递归直到输出小于1M才行
-            return this.image2Base64(img, ((size / 2).toFixed(1) as unknown as number) * 1)
-        } else {
-            // console.log(dataURL);
-            return dataURL
-        }
+        })
     },
     /**
      * base64解码 (中文乱码也可)
@@ -103,7 +109,11 @@ const Tools = {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
     },
-    // 扁平数据 转 父子结构
+    /**
+     * 扁平数据 转 父子结构
+     * @param items 数据源
+     * @returns 
+     */
     mapFun (items: any) {
         const result: Array<any> = [];   // 存放结果集
         const itemMap: any = {};  // 
@@ -150,7 +160,12 @@ const Tools = {
     arrFun2 (arr: any[], pid: any): any {
         return arr.filter(item => item.pid === pid).map(item => ({...item, children: this.arrFun2(arr, item.id)}))
     },
-    // 防抖
+    /**
+     * 防抖
+     * @param fn 执行函数
+     * @param delay 时间
+     * @returns 
+     */
     debounce(fn: any, delay: number) {
         let timer: any = null;
         return  () => {
@@ -161,7 +176,12 @@ const Tools = {
             }, delay)
         }
     },
-    // 节流
+    /**
+     * 节流
+     * @param fn 执行函数
+     * @param wait 时间
+     * @returns 
+     */
     throttle(fn: { apply: (arg0: any, arg1: IArguments) => void; }, wait: number){
         let pre = Date.now();
         return () =>{
@@ -199,6 +219,10 @@ const Tools = {
             }
         })
     },
+    /**
+     * 上传图片
+     * @param callback 
+     */
     uploadImg (callback: Function) {
         let input = document.createElement('input')
         input.setAttribute('type', 'file')
@@ -207,8 +231,15 @@ const Tools = {
         input.click()
         input.onchange = async function (e: Event) {
             let target = e.target as HTMLInputElement;
-            callback(await Tools.toBase64((target.files as FileList)[0]));
+            let baseStr = await Tools.toBase64((target.files as FileList)[0])
+            callback(await Tools.image2Base64(baseStr as string))
         }
+    },
+    /**
+     * 判断是否移动端
+     */
+    isMobile () {
+        return (/Mobile|Android|iPhone/i.test(navigator.userAgent))
     }
 }
  

@@ -4,6 +4,7 @@ import path, { resolve } from 'path'
 import pxtovw from 'postcss-px-to-viewport'
 import viteCompression from 'vite-plugin-compression'
 
+
 const loder_pxtovw = pxtovw({
   unitToConvert: 'px', // 需要转换的单位，默认为"px"
   viewportWidth: 750, // 设计稿的视口宽度
@@ -27,7 +28,9 @@ const loder_pxtovw = pxtovw({
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [vue()],
+  plugins: [
+    vue()
+  ],
   css: {
     postcss: {
       plugins: [loder_pxtovw]

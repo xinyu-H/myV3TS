@@ -1,4 +1,5 @@
 export const initStar = function (dom: HTMLElement) {
+    let closeAnimation: number
     // 创建canvas
     let width = dom.offsetWidth;
     let height = dom.offsetHeight;
@@ -38,7 +39,7 @@ export const initStar = function (dom: HTMLElement) {
         context.fillStyle = "#000";
         context.fillRect(0, 0, width, height);
         for (let i = numStars; i--;) stars[i].draw();
-        window.requestAnimationFrame(main);
+        closeAnimation = window.requestAnimationFrame(main);
     }
 
     function init() {
@@ -46,5 +47,8 @@ export const initStar = function (dom: HTMLElement) {
         main();
     }
     init();
+    return function() {
+        window.cancelAnimationFrame(closeAnimation)
+    }
 }
 

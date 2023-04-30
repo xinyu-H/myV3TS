@@ -20,13 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject, nextTick } from 'vue'
+import { ref, onMounted, inject, nextTick, watch } from 'vue'
 import { getData1ResponseModel } from '../../api/Home/HomeModel'
 import HomePage from './Home/HomePage.vue';
 import ShoppingPage from './Shopping/ShoppingPage.vue'
 import StarryPage from './Starry/StarryPage.vue';
 import MyPage from './My/MyPage.vue';
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
+import { Store1 } from '@/pinia/state'
 
 // 全局接口
 const $Api: any = inject('$Api')
@@ -54,7 +55,7 @@ const tabberList = ref<Array<{
     key: 'MyPage'
 }])
 // 底部导航下标
-const tabberActive = ref(1);
+const tabberActive = ref(2);
 // swipe ref实例
 const swipeRef = ref()
 // 底部导航变化后触发
@@ -66,6 +67,13 @@ function changeTabber (index: number | string) {
 function changeSwipe (index: number) {
     tabberActive.value = index
 }
+
+const Store = Store1()
+watch(tabberActive, (newV) => {
+    Store.updateIsShowBackTop(newV === 1 ? true : false)
+})
+
+
 onMounted(() => {
     // $Api.Home.getData1({
     //     num: 3
