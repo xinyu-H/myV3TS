@@ -31,11 +31,9 @@ const Props = defineProps(['item'])
 }
 
 let initStyle: Function = inject('initStyle') as Function
-let setLoading: Function = inject('setLoading') as Function
 function clickAction () {
-    setTimeout(() => {
+    nextTick(() => {
         initStyle()
-        setLoading()
     })
 }
 

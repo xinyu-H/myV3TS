@@ -18,12 +18,18 @@
                 </van-sidebar>
             </div>
             <div class="shoppingPage_content_info">
-                <van-list v-model:loading="loading" :finished="finished" :immediate-check="false" class="vantList"
-                    finished-text="没有更多了" @load="onLoad">
+                <div class="vantList" @scroll="scrollList()">
                     <div v-for="(item, index) in GoodList" :key="index" class="cardDiv">
                         <GoodCard :item="item" :index="index"></GoodCard>
                     </div>
-                </van-list>
+                    <div class="hintBox">
+                        <div class="loadingDom box_center" v-show="loading">
+                            <van-loading size="20" /> &nbsp;
+                            <span>加载中...</span>
+                        </div>
+                        <div class="noMoreDom" v-show="finished">没有跟多了</div>
+                    </div>
+                </div>
                 <van-back-top v-if="Store.isShowBackTop" bottom="10vh" offset="500" target=".vantList" />
             </div>
         </div>
@@ -36,6 +42,7 @@ import router from '../../../router/index';
 import { SidebarListModel, SidebarList, GoodListModel, GoodList } from './DataModel/shoppingPageData'
 import GoodCard from './components/GoodCar.vue'
 import { Store1 } from '@/pinia/state'
+import { load } from '@amap/amap-jsapi-loader';
 
 const Store = Store1()
 const searchValue = ref<string>()
@@ -58,20 +65,26 @@ function clickSidebar(item: SidebarListModel) {
 // 商品部分
 const loading = ref<boolean>(false);
 const finished = ref<boolean>(false);
-
-function onLoad() {
-    setTimeout(() => {
-        loading.value = false
-        GoodList.value.push(...GoodList.value)
-        if (GoodList.value.length >= 50) {
-            finished.value = true
-        }
-        nextTick(initStyle)
-    }, 2000)
+watch(loading, (newV) => {
+    if (newV) {
+        setTimeout(() => {
+            loading.value = false
+            GoodList.value.push(...GoodList.value)
+            nextTick(initStyle)
+        }, 10000)
+    }
+})
+/**
+ * 列表滚动
+ */
+function scrollList() {
+    let listDom = document.querySelector('.vantList') as HTMLElement
+    if (listDom.scrollTop + listDom.offsetHeight + 1 >= getHeight(true)){
+        GoodList.value.length >= 50 ? finished.value = true : loading.value = true
+    }
 }
 
 provide('initStyle', initStyle)
-provide('setLoading', setLoading)
 /**
  * 获取dom卡片
  */
@@ -86,6 +99,7 @@ function initStyle() {
             setStyle(divs, v, i, false)
         }
     })
+    setLoading()
 }
 /**
  * 以此设置dom top高度
@@ -117,35 +131,30 @@ function getNum(num: number, even: boolean) {
     return numArr;
 }
 /**
+ * 获取列表总高度
+ * @param all 
+ */
+function getHeight (all?: boolean): number {
+    let len = GoodList.value.length
+    let cardDivLast1 = document.querySelectorAll('.cardDiv')[len - 1] as HTMLElement
+    let cardDivLast2 = document.querySelectorAll('.cardDiv')[len - 2] as HTMLElement
+    let cardDiv = (cardDivLast1.offsetTop + cardDivLast1.offsetHeight) > (cardDivLast2.offsetTop + cardDivLast2.offsetHeight) ? cardDivLast1 : cardDivLast2
+    let top = cardDiv.offsetTop + cardDiv.offsetHeight
+    let hintBox = document.querySelector('.hintBox') as HTMLElement
+    return all ? top + hintBox.offsetHeight : top
+}
+/**
  * 设置加载提示
  */
 function setLoading() {
-    if (GoodList.value) {
-        let len = GoodList.value.length
-        let cardDivLast1 = document.querySelectorAll('.cardDiv')[len - 1] as HTMLElement
-        let cardDivLast2 = document.querySelectorAll('.cardDiv')[len - 2] as HTMLElement
-        let cardDiv = (cardDivLast1.offsetTop + cardDivLast1.offsetHeight) > (cardDivLast2.offsetTop + cardDivLast2.offsetHeight) ? cardDivLast1 : cardDivLast2
-        let top = cardDiv.offsetTop + cardDiv.offsetHeight
-        let listLoadingDom = document.querySelector('.van-list__loading') as HTMLElement
-        if (listLoadingDom) {
-            listLoadingDom.style.width = '100%'
-            listLoadingDom.style.position = 'absolute'
-            listLoadingDom.style.top = top + 'px'  
-        }
-        let listFinishText = document.querySelector('.van-list__finished-text') as HTMLElement
-        if (listFinishText) {
-            listFinishText.style.position = 'absolute'
-            listFinishText.style.top = top + 'px'
-        }
-    }
+    let hintBox = document.querySelector('.hintBox') as HTMLElement
+    hintBox.style.position = 'absolute'
+    hintBox.style.top = getHeight() + 'px'
 }
 onMounted(() => {
     nextTick(initStyle)
 })
 
-watch([loading, GoodList], (newVal) => {
-    nextTick(setLoading)
-})
 </script>
 
 <style lang="scss" scoped>
@@ -230,15 +239,26 @@ watch([loading, GoodList], (newVal) => {
                 width: 100%;
                 height: 100%;
                 overflow: auto;
-
                 // display: flex;
                 // flex-wrap: wrap;
                 // justify-content: space-around;
+                .hintBox {
+                    position: absolute;
+                    width: 100%;
+                    height: 80px;
+                    color: #666;
+                    text-align: center;
+                }
                 .cardDiv {
                     position: absolute;
                     width: 49%;
                     height: auto;
                     margin: 0 5px;
+                }
+                .loadingDom, .noMoreDom{
+                    width: 100%;
+                    height: 100%;
+                    line-height: 80px;
                 }
             }
         }
