@@ -24,10 +24,10 @@
                     </div>
                     <div class="hintBox">
                         <div class="loadingDom box_center" v-show="loading">
-                            <van-loading size="20" /> &nbsp;
+                            <van-loading size="16" /> &nbsp;
                             <span>加载中...</span>
                         </div>
-                        <div class="noMoreDom" v-show="finished">没有跟多了</div>
+                        <div class="noMoreDom" v-show="finished">没有更多了</div>
                     </div>
                 </div>
                 <van-back-top v-if="Store.isShowBackTop" bottom="10vh" offset="500" target=".vantList" />
@@ -71,7 +71,7 @@ watch(loading, (newV) => {
             loading.value = false
             GoodList.value.push(...GoodList.value)
             nextTick(initStyle)
-        }, 10000)
+        }, 1000)
     }
 })
 /**
@@ -242,18 +242,19 @@ onMounted(() => {
                 // display: flex;
                 // flex-wrap: wrap;
                 // justify-content: space-around;
+                .cardDiv {
+                    position: absolute;
+                    width: 49%;
+                    height: auto;
+                    margin: 0 5px;
+                }
                 .hintBox {
                     position: absolute;
                     width: 100%;
                     height: 80px;
                     color: #666;
                     text-align: center;
-                }
-                .cardDiv {
-                    position: absolute;
-                    width: 49%;
-                    height: auto;
-                    margin: 0 5px;
+                    font-size: 28px;
                 }
                 .loadingDom, .noMoreDom{
                     width: 100%;
