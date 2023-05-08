@@ -73,38 +73,42 @@ const router = createRouter({
     }, {
         path: '/PageA',
         name: 'PageA',
-        component: () => import('/src/views/PageA.vue'),
+        component: () => import('/src/views/Test/PageA.vue'),
         meta: {
             is: true
         }
     }, {
         path: '/PageB',
         name: 'PageB',
-        component: () => import('/src/views/PageB.vue')
+        component: () => import('/src/views/Test/PageB.vue')
     }, {
         path: '/PageC',
         name: 'PageC',
-        component: () => import('/src/views/PageC.vue')
+        component: () => import('/src/views/Test/PageC.vue')
     }, {
         path: '/Work1',
         name: 'Work1',
-        component: () => import('/src/views/Work1.vue')
+        component: () => import('/src/views/Test/Work1.vue')
     }, {
         path: '/PageD',
         name: 'PageD',
-        component: () => import('/src/views/PageD.vue')
+        component: () => import('/src/views/Test/PageD.vue')
     }, {
         path: '/PageE',
         name: 'PageE',
-        component: () => import('/src/views/PageE.vue')
+        component: () => import('/src/views/Test/PageE.vue')
     }, {
         path: '/PageF',
         name: 'PageF',
-        component: () => import('/src/views/PageF.vue')
+        component: () => import('/src/views/Test/PageF.vue')
     }, {
         path: '/PageG',
         name: 'PageG',
-        component: () => import('/src/views/PageG.vue')
+        component: () => import('/src/views/Test/PageG.vue')
+    }, {
+        path: '/PageH',
+        name: 'PageH',
+        component: () => import('/src/views/Test/PageH.vue')
     }]
 })
 

@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { update } from 'lodash';
 import { provide, ref, watchEffect } from 'vue'
-import PageBChildVue from '../components/PageBChild.vue';
+import PageBChildVue from '../../components/PageBChild.vue';
 const age = ref<number>(23)
 const name = ref<string>('侯新宇')
 provide('ageKey', age)

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import PageGChildPage from '../components/PageGChild.vue';
+import PageGChildPage from '../../components/PageGChild.vue';
 
 const PageGChild = ref<InstanceType<typeof PageGChildPage>>()
 function add() {

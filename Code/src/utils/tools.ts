@@ -2,6 +2,7 @@
  * 通用js方法封装处理
  * 
  */
+import { onMounted } from "vue";
 
 const Tools = {
     // 添加日期范围
@@ -239,6 +240,9 @@ const Tools = {
      * 判断是否移动端
      */
     isMobile () {
+        onMounted(() => {
+            console.log('tools.ts')
+        })
         return (/Mobile|Android|iPhone/i.test(navigator.userAgent))
     }
 }
