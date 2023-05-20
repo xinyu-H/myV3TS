@@ -121,7 +121,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log(to.path, from.path);
     if (!Utils.getSessionItem('openId') && to.path !== '/LoginPage') {
         router.replace('/LoginPage')
     } else {

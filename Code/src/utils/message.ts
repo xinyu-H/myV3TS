@@ -65,12 +65,12 @@ const Message = {
     alertToast: function (msg: string, showCancelButton?: boolean, title?: string, icon?: string) {
         const beforeClose = function (action: string): Promise<boolean> {
             return new Promise((resolve) => {
+                let vant_dialog__content = document.querySelector('body .van-dialog__content') as HTMLElement
+                vant_dialog__content.querySelector('img')?.remove()
                 if (action === 'confirm') {
                     resolve(true);
                 } else {
                     // 拦截取消操作
-                    let vant_dialog__content = document.querySelector('body .van-dialog__content') as HTMLElement
-                    vant_dialog__content.querySelector('img')?.remove()
                     resolve(false)
                     closeDialog()
                 }
