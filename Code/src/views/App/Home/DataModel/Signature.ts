@@ -144,7 +144,7 @@ export const Autog = {
                 // 对比画布上是否有输入
                 if (blob1.size === blob2.size) return Message.showToast('请完整签名')
                 let img = await Tools.toBase64(blob1) as string
-                Message.alertToast('是否下载图片', '提示', img, true).then(res => {
+                Message.alertToast('是否下载图片', true, '提示', img).then(res => {
                     if (res) {
                         // 获取当前时间并转成字符串，用来当做文件名
                         const date = Date.now().toString()

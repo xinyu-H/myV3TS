@@ -16,7 +16,7 @@
         </header>
         <div class="myPage_item">
             <div v-for="(item, index) in ItemList" :key="index" class="" @click="clickItem(item)">
-                <van-icon :name="item.icon" size="22" class="icon1" />
+                <van-icon :name="item.icon" size="22" class="icon1" :style="`transform:${item.rotate}`"/>
                 <span>{{ item.name }}</span>
                 <van-icon name="arrow" class="icon2" />
             </div>
@@ -29,12 +29,25 @@ import { ref, inject } from 'vue'
 import { ItemListModel, ItemList } from './DataModel/MypageData';
 import imgStr from '@/assets/images/My/7.jpg'
 import router from '@/router';
+import Message from '@/utils/message';
+import Utils from '@/utils/utils';
 
 const $Utils:any = inject('$Utils')
 let img = ref<string>(imgStr)
 function clickItem (item: ItemListModel) {
-    if (!item.path) return $Utils.Message.showToast('暂未开通此模块')
-    router.push(item.path)
+    if (item.type === 'page') {
+        if (!item.path) return $Utils.Message.showToast('暂未开通此模块')
+        router.push(item.path)
+    } else {
+        if (item.name === '退出登录') {
+            Message.alertToast('确定要退出登录吗？', true).then(res => {
+                if (res) Utils.cleraSessionItem()
+                router.go(0)
+            })
+        }
+    }
+    
+    
 
 }
 

@@ -62,7 +62,7 @@ const Message = {
      * @param showCancelButton 
      * @returns 
      */
-    alertToast: function (msg: string, title?: string, icon?: string, showCancelButton?: boolean) {
+    alertToast: function (msg: string, showCancelButton?: boolean, title?: string, icon?: string) {
         const beforeClose = function (action: string): Promise<boolean> {
             return new Promise((resolve) => {
                 if (action === 'confirm') {
