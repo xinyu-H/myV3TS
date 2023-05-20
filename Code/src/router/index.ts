@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import Utils from '@/utils/utils'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -71,6 +72,13 @@ const router = createRouter({
             is: true
         }
     }, {
+        path: '/LoginPage',
+        name: 'LoginPage',
+        component: () => import('/src/views/App/Login/LoginPage.vue'),
+        meta: {
+            title: '登录'
+        }
+    }, {
         path: '/PageA',
         name: 'PageA',
         component: () => import('/src/views/Test/PageA.vue'),
@@ -110,6 +118,16 @@ const router = createRouter({
         name: 'PageH',
         component: () => import('/src/views/Test/PageH.vue')
     }]
+})
+
+router.beforeEach((to, from, next) => {
+    console.log(to.path, from.path);
+    if (!Utils.getSessionItem('openId') && to.path !== '/LoginPage') {
+        router.replace('/LoginPage')
+    } else {
+        next()
+    }
+    
 })
 
 export default router

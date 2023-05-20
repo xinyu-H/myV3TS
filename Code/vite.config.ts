@@ -40,7 +40,7 @@ export default defineConfig({
     'process.env': {}
   },
   server: {
-    host: '192.168.124.9',
+    host: '192.168.0.169',
     port: 8888
   },
   resolve: {

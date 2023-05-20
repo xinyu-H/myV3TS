@@ -8,11 +8,12 @@
 import { inject } from 'vue';
 import Qrcode from './componetns/Qrcode.vue';
 import router from '@/router';
+import Utils from '@/utils/utils';
 
 const $Utils: any = inject('$Utils')
 
 function scanResult(text: any) {
-    sessionStorage.setItem('result', text)
+    Utils.setSessionItem('result', text)
     $Utils.Message.alertToast(text).then(() => {
         router.go(-1);
     })

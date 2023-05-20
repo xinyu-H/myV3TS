@@ -4,7 +4,7 @@ import successImg from '../assets/images/Base/success.png'
 import failImg from '../assets/images/Base/fail.png'
 
 
-export default {
+const Message = {
     /**
      * 加载提示
      * @param msg 
@@ -95,3 +95,5 @@ export default {
         })
     }
 }
+
+export default Message;

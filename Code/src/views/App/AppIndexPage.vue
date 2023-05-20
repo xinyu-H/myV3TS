@@ -28,6 +28,7 @@ import StarryPage from './Starry/StarryPage.vue';
 import MyPage from './My/MyPage.vue';
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
 import { Store1 } from '@/pinia/state'
+import Utils from "@/utils/utils";
 
 // 全局接口
 const $Api: any = inject('$Api')
@@ -81,14 +82,14 @@ onMounted(() => {
     //     console.log(res)
     // })
     nextTick(() => {
-       if (sessionStorage.getItem('tabActive')) {
-            tabberActive.value = Number(sessionStorage.getItem('tabActive'))
+       if (Utils.getSessionItem('tabActive')) {
+            tabberActive.value = Number(Utils.getSessionItem('tabActive'))
         } 
     })
     
 })
 onBeforeRouteLeave((to, from) => {
-    sessionStorage.setItem('tabActive', tabberActive.value as unknown as string)
+    Utils.setSessionItem('tabActive', tabberActive.value as unknown as string)
 })
 
 
