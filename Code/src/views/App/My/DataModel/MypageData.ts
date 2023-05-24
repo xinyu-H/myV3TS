@@ -22,6 +22,11 @@ export const ItemList = ref<Array<ItemListModel>>([{
     path: '/QrPage',
     type: 'page'
 }, {
+    name: '习题测试',
+    icon: 'qr',
+    path: '/TopicPage',
+    type: 'page'
+}, {
     name: '退出登录',
     icon: 'back-top',
     type: 'button',

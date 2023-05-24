@@ -62,7 +62,14 @@ const router = createRouter({
         name: 'FittingPage',
         component: () => import('/src/views/App/Shopping/FittingPage.vue'),
         meta: {
-            title: '地图'
+            title: '换衣'
+        }
+    }, {
+        path: '/TopicPage',
+        name: 'TopicPage',
+        component: () => import('/src/views/App/Topic/TopicPage.vue'),
+        meta: {
+            title: '习题测试'
         }
     }, {
         path: '/',

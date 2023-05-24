@@ -16,6 +16,8 @@ import Utils from './utils/index'
 import Api from './api/index'
 
 import * as echarts from 'echarts';
+// pinia 持久化
+import PiniaPluginPersistedstate  from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 app.provide('$Utils', Utils)
@@ -25,6 +27,6 @@ app.provide('$Echarts', echarts)
 app.use(router)
 .use(ElementPlus)
 .use(Vant)
-.use(createPinia())
+.use(createPinia().use(PiniaPluginPersistedstate))
 .mount('#app')
 

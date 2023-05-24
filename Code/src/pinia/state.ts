@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 
 export const Store1 = defineStore('Store1', {
+    persist: true,
     state: () => {
         return {
             sex: '男',

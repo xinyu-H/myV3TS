@@ -10,16 +10,19 @@
           <van-field
             v-model="username"
             clearable
+            @clear="username = ''"
             label=""
             left-icon="user-o"
-            placeholder="请输入账号"
+            placeholder="默认账号 admin"
           />
           <van-field
             v-model="password"
             clearable
+            @clear="password = ''"
             label=""
             left-icon="bag-o"
-            placeholder="请输入密码"
+            placeholder="请输入密码 同上"
+            type="password"
           />
         </div>
         <div class="loginPage-content-box-btn">
