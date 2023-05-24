@@ -23,12 +23,12 @@ export const ItemList = ref<Array<ItemListModel>>([{
     type: 'page'
 }, {
     name: '习题测试',
-    icon: 'qr',
+    icon: 'records',
     path: '/TopicPage',
     type: 'page'
 }, {
     name: '退出登录',
     icon: 'back-top',
     type: 'button',
-    rotate: 'rotate(-90deg)'
+    rotate: 'rotate(90deg)'
 }])

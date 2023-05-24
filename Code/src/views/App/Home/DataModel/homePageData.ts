@@ -112,27 +112,27 @@ export interface ItemsListModel {
 export const ItemsList = ref<Array<ItemsListModel>>([{
     name: '烟花',
     icon: 'fire-o',
-    color: 'red'
+    color: '#FF9A9E'
 }, {
     name: '签名',
     icon: 'edit',
-    color: '#993'
+    color: '#38F9D7'
 }, {
     name: '群烟',
     icon: 'fire-o',
-    color: '#900'
+    color: '#A18CD1'
 }, {
     name: '振动',
     icon: 'bell',
-    color: '#399'
+    color: '#FBC2EB'
 }, {
     name: '拍照',
     icon: 'photograph',
-    color: '#39f'
+    color: '#8FD3F4'
 }, {
     name: '通话',
     icon: 'phone',
-    color: 'green'
+    color: '#A1C4DB'
 }, {
     name: '',
     icon: '',
