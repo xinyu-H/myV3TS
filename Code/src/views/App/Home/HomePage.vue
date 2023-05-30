@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { nextTick, ref, onMounted, onUnmounted, inject, watch } from 'vue';
 import { HeaderListModel, HeaderList, ItemsListModel, ItemsList } from './DataModel/homePageData';
-import FireworkData from './DataModel/Fireworks'
+import Firework from './DataModel/Fireworks'
 import EchartsPage from './components/echartsPage.vue'
 import SignaturePage from './components/signaturePage.vue'
 import BannerPage from './components/bannerPage.vue'
@@ -50,7 +50,7 @@ async function clickItems(item: ItemsListModel) {
         isShowFireworkOverlay.value = true
         nextTick(() => {
             (document.querySelector('.fireworkOverlay') as HTMLElement).style.background = 'rgba(0, 0, 0, 0)'
-            new (FireworkData.Fireworks as any)();
+            Firework.init();
             startFirewoke()
             fireworkSetTime = setTimeout(() => {
                 isShowFireworkOverlay.value = false
@@ -64,7 +64,7 @@ async function clickItems(item: ItemsListModel) {
         isShowFireworkOverlay.value = true
         nextTick(() => {
             (document.querySelector('.fireworkOverlay') as HTMLElement).style.background = 'rgba(0, 0, 0, 0.8)'
-            new (FireworkData.Fireworks as any)();
+            Firework.init();
             fireworkSetInter = setInterval(() => {
                 startFirewoke()
             }, $Utils.Tools.getRandom(800, 1000))
@@ -74,7 +74,7 @@ async function clickItems(item: ItemsListModel) {
         let vibration = "vibrate" in navigator;
         if (!vibration) return $Utils.Message.failToast('不支持振动')
         isShake.value = true
-        // 振动多次 参数分别是震动3秒，等待2秒，然后振动1秒
+        // 振动多次 参数分别是震动--间隔--振动
         navigator.vibrate([300, 100, 200, 100, 100, 100, 500, 100, 300, 100, 200, 100, 100, 50, 50, 50, 150, 200, 200])
         setTimeout(() => {
             isShake.value = false
@@ -93,7 +93,7 @@ watch(isShowFireworkOverlay, (newVal) => {
     if (!newVal) {
         clearInterval(fireworkSetInter)
         clearTimeout(fireworkSetTime)
-        window.cancelAnimationFrame(FireworkData.self.stop)
+        window.cancelAnimationFrame(Firework.stop)
         let fireworkOverlay = document.querySelector('.fireworkOverlay')
         let canvasDom = fireworkOverlay?.querySelector('canvas') as HTMLCanvasElement
         fireworkOverlay?.removeChild(canvasDom)
@@ -103,17 +103,17 @@ watch(isShowFireworkOverlay, (newVal) => {
  * 放烟花
  */
 function startFirewoke () {
-    FireworkData.self.currentHue = $Utils.Tools.getRandom(0, 360)
+    Firework.currentHue = $Utils.Tools.getRandom(0, 360)
     let wArea = $Utils.Tools.getRandom(100, window.innerWidth - 100)
     let hArea = $Utils.Tools.getRandom(100,  (window.innerHeight / 2) - 100)
-    FireworkData.self.createFireworks(window.innerWidth / 2, window.innerHeight, wArea, hArea);
+    Firework.createFireworks(window.innerWidth / 2, window.innerHeight, wArea, hArea);
 }
 
 
 onUnmounted(() => {
     clearInterval(fireworkSetInter)
     clearTimeout(fireworkSetTime)
-    window.cancelAnimationFrame(FireworkData.self.stop)
+    window.cancelAnimationFrame(Firework.stop)
 })
 </script>
 
