@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Utils from '@/utils/utils'
+import Message from '@/utils/message'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -128,12 +129,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    Message.showLoadingToast('')
     if (!Utils.getSessionItem('openId') && to.path !== '/LoginPage') {
         router.replace('/LoginPage')
     } else {
         next()
     }
     
+})
+
+router.afterEach((to, from, next) => {
+    Message.closeLoadingToast()
 })
 
 export default router

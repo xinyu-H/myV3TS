@@ -8,7 +8,7 @@ import { createPinia } from 'pinia'
 // 全局样式
 import './assets/style/base.css'
 // vant ui
-import Vant from 'vant'
+import Vant, { ConfigProvider } from 'vant'
 import 'vant/lib/index.css'
 // 帮助方法
 import Utils from './utils/index'
@@ -27,6 +27,7 @@ app.provide('$Echarts', echarts)
 app.use(router)
 .use(ElementPlus)
 .use(Vant)
+.use(ConfigProvider)
 .use(createPinia().use(PiniaPluginPersistedstate))
 .mount('#app')
 

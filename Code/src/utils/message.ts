@@ -11,8 +11,8 @@ const Message = {
      */
     showLoadingToast: function (msg?: string) {
         showLoadingToast({
-            message: msg || '加载中...',
-            forbidClick: false,
+            message: msg,
+            forbidClick: true,
             loadingType: 'spinner',
             duration: 0
         })

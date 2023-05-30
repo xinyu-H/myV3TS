@@ -33,6 +33,7 @@ import Firework from './DataModel/Fireworks'
 import EchartsPage from './components/echartsPage.vue'
 import SignaturePage from './components/signaturePage.vue'
 import BannerPage from './components/bannerPage.vue'
+import HomeApi from '@/api/Home/Home'
 
 const $Utils: any = inject('$Utils')
 
@@ -109,6 +110,10 @@ function startFirewoke () {
     Firework.createFireworks(window.innerWidth / 2, window.innerHeight, wArea, hArea);
 }
 
+// HomeApi.getData1({
+//     num: 3
+// })
+// console.log(data)
 
 onUnmounted(() => {
     clearInterval(fireworkSetInter)
