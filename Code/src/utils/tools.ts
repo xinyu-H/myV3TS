@@ -244,6 +244,32 @@ const Tools = {
             console.log('tools.ts')
         })
         return (/Mobile|Android|iPhone/i.test(navigator.userAgent))
+    },
+    /** 下载文件 Bolb格式 */
+    downloadFileByBolb(res: Blob, name: string) {
+        const blob = new Blob([res], { type: "application/msword;charset=UTF-8" });
+        const link = document.createElement("a");
+        link.download = name + ".xlsx"; //定义表格名称，后缀是文件格式
+        link.style.display = "none";
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    },
+    /** 获取文件 */
+    getFileInfo(): Promise<FileList> {
+        return new Promise(resolve => {
+            let input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("id", "file");
+            input.setAttribute("accept", "*");
+            input.click();
+            input.onchange = function (e: Event) {
+                let target = e.target as HTMLInputElement;
+                let baseStr = target.files as unknown as FileList;
+                resolve(baseStr);
+            };
+        });
     }
 }
  
