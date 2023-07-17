@@ -87,6 +87,10 @@ const router = createRouter({
             title: '登录'
         }
     }, {
+        path: '/Work1',
+        name: 'Work1',
+        component: () => import('/src/views/Test/Work1.vue')
+    }, {
         path: '/PageA',
         name: 'PageA',
         component: () => import('/src/views/Test/PageA.vue'),
@@ -101,10 +105,6 @@ const router = createRouter({
         path: '/PageC',
         name: 'PageC',
         component: () => import('/src/views/Test/PageC.vue')
-    }, {
-        path: '/Work1',
-        name: 'Work1',
-        component: () => import('/src/views/Test/Work1.vue')
     }, {
         path: '/PageD',
         name: 'PageD',
@@ -125,6 +125,10 @@ const router = createRouter({
         path: '/PageH',
         name: 'PageH',
         component: () => import('/src/views/Test/PageH.vue')
+    }, {
+        path: '/T1',
+        name: 'PageH',
+        component: () => import('/src/views/Test/Three/T1.vue')
     }]
 })
 
