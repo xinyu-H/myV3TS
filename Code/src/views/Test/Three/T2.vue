@@ -29,6 +29,7 @@ let ponLight: THREE.PointLight
 let raycaster: THREE.Raycaster
 let mouse: THREE.Vector2
 let closeDoorAnimation: number
+let activeBox: THREE.Mesh
 // 场景
 const initScene = () => {
     // 初始化画布宽高
@@ -48,7 +49,7 @@ const initCamera = () => {
     add(camera);
     camera.lookAt(scene.position);
 }
-// 控制器
+/// 控制器
 const initControls = () => {
     controls = new OrbitControls(camera, renderer.domElement);
 }
@@ -70,6 +71,7 @@ const initRenderer = () => {
         antialias: true,
         alpha: true,
     })
+    renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.setClearColor(0x4682B4, 1.0);
     renderer.setClearAlpha(0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -145,12 +147,19 @@ const addBox = (boxDetail: boxDetailModel) => {
         mesh.initPosition = { x: boxDetail.x, y: boxDetail.y, z: boxDetail.z }
         add(mesh);
         window.addEventListener("click", onClick, false);
+        window.addEventListener("keydown", onKeydown, false);
     }
     if (!boxDetail.img) return cBox();
     let loader = new THREE.TextureLoader();// 纹理贴图
     loader.load(boxDetail.img as string, (texture) => {
         cBox(texture)
     })
+}
+const onKeydown = (e: any) => {
+    if (e.keyCode === 37) activeBox.position.x -= 1
+    if (e.keyCode === 39) activeBox.position.x += 1
+    if (e.keyCode === 38) activeBox.position.y += 1
+    if (e.keyCode === 40) activeBox.position.y -= 1
 }
 /**
  * 点击事件
@@ -168,6 +177,8 @@ const onClick = (event: any) => {
     // console.log(model, model.name)
     if (intersects.length > 0 && model.name) {
         let box = scene.getObjectByName(model.name) as THREE.Mesh
+        activeBox = box
+        return;
         // 动画形式参考 https://tweenjs.github.io/tween.js/examples/03_graphs.html
         if (!model.animat) return;
         let originPosition = {
@@ -186,14 +197,25 @@ const onClick = (event: any) => {
             ty: model.animat.ty,
             tz: model.animat.tz
         }
+        let cloneOriginPosition = JSON.parse(JSON.stringify(originPosition))
+        let cloneTargetPosition = JSON.parse(JSON.stringify(targetPosition))
         if (model.isOpenAnimat) {
+            let openBox2 = new TWEEN.Tween(cloneTargetPosition)
+            .to(cloneOriginPosition, model.animatTime || 1000)
+            .easing(TWEEN.Easing.Linear.None)
+            .onUpdate(function(this: any) {
+                box.rotation.set(this.tx, this.ty, this.tz);
+                box.position.set(this.x, this.y, this.z);
+            })
             let openBox = new TWEEN.Tween(originPosition)
             .to(targetPosition, model.animatTime || 1000)
             .easing(TWEEN.Easing.Linear.None)
             .onUpdate(function(this: any) {
                 box.rotation.set(this.tx, this.ty, this.tz);
                 box.position.set(this.x, this.y, this.z);
-            }).start();
+            }).start()
+            // openBox.chain(openBox2)
+            // openBox2.chain(openBox)
             model.isOpenAnimat = false;
         } else {
             let closeBox = new TWEEN.Tween(targetPosition)
@@ -209,10 +231,10 @@ const onClick = (event: any) => {
 }
 
 const createBox = () => {
-    addBox({l: 100, w: 100, h: 100, x: 0, y: 0, z: 0, name: 'box1', color: "#939", animat: {x: 100, y: 100, z: 0, tx: 0, ty: 0, tz: 2}});
-    addBox({l: 100, w: 100, h: 100, x: -200, y: 0, z: 0, name: 'box2', color: "#39f", animat: {x: 50, y: 50, z: 50, tx: 2, ty: 2, tz: 2}, animatTime: 3000});
-    addBox({l: 100, w: 100, h: 100, x: 200, y: 0, z: 0, name: 'box3', img: img1});
-    createBSPBox({l: 200, w: 230, h: 6, x: 0, y: 0, z: 0, l2: 180, w2: 210, h2: 6, x2: 0, y2: 0, z2: 0, color: "pink"})
+    addBox({l: 30, w: 30, h: 30, x: 0, y: 0, z: 0, name: 'box1', color: "#666", animat: {x: 100, y: 100, z: 0, tx: 0, ty: 0, tz: 2}});
+    // addBox({l: 100, w: 100, h: 100, x: -200, y: 0, z: 0, name: 'box2', color: "#39f", animat: {x: 50, y: 50, z: 50, tx: 2, ty: 2, tz: 2}, animatTime: 3000});
+    // addBox({l: 100, w: 100, h: 100, x: 200, y: 0, z: 0, name: 'box3', img: img1});
+    // createBSPBox({l: 200, w: 230, h: 6, x: 0, y: 0, z: 0, l2: 180, w2: 210, h2: 6, x2: 0, y2: 0, z2: 0, color: "pink"})
 }
 
 const initDoor = () => {
@@ -244,7 +266,7 @@ onUnmounted(() => {
     width: 100%;
     height: 100%;
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    background: url('../../../assets/images/Login/sand.jpg');
+    // background: url('../../../assets/images/Login/sand.jpg');
     background-size: 100% 100%;
 }
 </style>

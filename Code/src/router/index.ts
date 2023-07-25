@@ -127,8 +127,16 @@ const router = createRouter({
         component: () => import('/src/views/Test/PageH.vue')
     }, {
         path: '/T1',
-        name: 'PageH',
+        name: 'T1',
         component: () => import('/src/views/Test/Three/T1.vue')
+    }, {
+        path: '/T2',
+        name: 'T2',
+        component: () => import('/src/views/Test/Three/T2.vue')
+    }, {
+        path: '/Test',
+        name: 'Test',
+        component: () => import('/src/views/Test/Three/Test.vue')
     }]
 })
 
