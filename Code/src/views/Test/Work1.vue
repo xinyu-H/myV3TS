@@ -10,26 +10,26 @@
 <script setup lang="ts">
 import { nextTick } from "vue";
 
-let scale = 1;
-let boxW;
-const scaleBox = (box: HTMLElement, size: number) => {
-    boxW = box.getBoundingClientRect().width;
+/**
+ * 
+ * @param box 缩放元素
+ * @param size 窗口大小
+ * @param scale 缩放比例
+ */
+const scaleBox = (box: HTMLElement, size: number, scale: number) => {
+    let boxW = box.getBoundingClientRect().width;
     box.style.transformOrigin = `top left`;
     while (Math.abs(boxW - size) > 1) {
         boxW < size ? scale += 0.001 : scale -= 0.001;
         box.style.transform = `scale(${scale})`;
         boxW = box.getBoundingClientRect().width;
     }
-    console.log(boxW, size);
+    // console.log(boxW, size);
 }
 
-window.addEventListener("resize", () => {
-    scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth)
-})
+window.addEventListener("resize", () => scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth, 1))
 
-nextTick(() => {
-    scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth);
-})
+nextTick(() => scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth, 1))
 
 
 
