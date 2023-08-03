@@ -16,7 +16,7 @@ import { nextTick } from "vue";
  * @param size 窗口大小
  * @param scale 缩放比例
  */
-const scaleBox = (box: HTMLElement, size: number, scale: number) => {
+const scaleBox = (box: HTMLElement, size: number = window.innerWidth, scale: number = 1) => {
     let boxW = box.getBoundingClientRect().width;
     box.style.transformOrigin = `top left`;
     while (Math.abs(boxW - size) > 1) {
@@ -27,9 +27,9 @@ const scaleBox = (box: HTMLElement, size: number, scale: number) => {
     // console.log(boxW, size);
 }
 
-window.addEventListener("resize", () => scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth, 1))
+window.addEventListener("resize", () => scaleBox(document.querySelector(".box") as HTMLElement))
 
-nextTick(() => scaleBox(document.querySelector(".box") as HTMLElement, window.innerWidth, 1))
+nextTick(() => scaleBox(document.querySelector(".box") as HTMLElement))
 
 
 
