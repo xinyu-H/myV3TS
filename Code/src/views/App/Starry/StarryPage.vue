@@ -1,248 +1,349 @@
 <template>
-    <div class="starryPage">
-        <div class="webglDom" ref="webglDom"></div>
-    </div>
+  <div class="starryPage">
+    <div class="webglDom" ref="webglDom"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick, onUnmounted, inject } from 'vue'
-import { initStar } from './DataModel/star'
-import * as THREE from 'three'
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { ref, onMounted, nextTick, onUnmounted, inject } from "vue";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import TWEEN from "tween.js";
-import ThreeBSPF from 'three-js-csg'
-import doorImg from '@/assets/images/Door/door_right.png'
+import ThreeBSPF from "three-js-csg";
+import doorImg from "@/assets/images/Door/door_right.png";
+import { initStar } from "./DataModel/star";
+import { boxDetailModel, bspDetailModel } from "./DataModel/interface";
+import Is from "@/utils/is";
+import img1 from "@/assets/images/Login/leaf.jpg";
 
-
-const $Utils: any = inject('$Utils')
-const ThreeBSP = ThreeBSPF(THREE)
+const ThreeBSP = ThreeBSPF(THREE);
 let width = 0,
-    height = 0,
-    scene: THREE.Scene,
-    camera: THREE.Camera,
-    controls = null,
-    renderer: THREE.WebGLRenderer,
-    isOpenDoor = true,
-    amdLight = null,
-    dirLight = null,
-    ponLight: THREE.PointLight,
-    // 鼠标位置
-    raycaster: THREE.Raycaster,
-    mouse: THREE.Vector2,
-    dummy: THREE.Object3D,
-    closeDoorAnimation: number;
-
+  height = 0,
+  scene: THREE.Scene,
+  camera: THREE.Camera,
+  controls = null,
+  renderer: THREE.WebGLRenderer,
+  isOpenDoor = true,
+  amdLight = null,
+  dirLight = null,
+  ponLight: THREE.PointLight,
+  // 鼠标位置
+  raycaster: THREE.Raycaster,
+  mouse: THREE.Vector2,
+  dummy: THREE.Object3D,
+  closeDoorAnimation: number;
 
 // 场景
 function initScene() {
-    // 初始化画布宽高
-    const container = document.querySelector('.webglDom') as HTMLElement;
-    width = container.offsetWidth;
-    height = container.offsetHeight;
-    scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x005577, 1, 2800)
-    // scene.background = new THREE.Color( 0x000000 );
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
-    dummy = new THREE.Object3D();
+  // 初始化画布宽高
+  const container = document.querySelector(".webglDom") as HTMLElement;
+  width = container.offsetWidth;
+  height = container.offsetHeight;
+  scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x005577, 1, 2800);
+  // scene.background = new THREE.Color( 0x000000 );
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
+  dummy = new THREE.Object3D();
 }
 // 相机
-function initCamera(){
-    camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 10000);
-    camera.position.set(0, 0, 500);
-    add(camera);
-    camera.lookAt(scene.position);
+function initCamera() {
+  camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 10000);
+  camera.position.set(0, 0, 800);
+  add(camera);
+  camera.lookAt(scene.position);
 }
 // 控制器
-function initControls(){
-    controls = new OrbitControls(camera, renderer.domElement);
+function initControls() {
+  controls = new OrbitControls(camera, renderer.domElement);
 }
 // 添加灯光
-function initLight(){
-    amdLight = new THREE.AmbientLight('#aaa');
-    dirLight = new THREE.DirectionalLight('#aaa')
-    ponLight = new THREE.PointLight('#aaa')
-    amdLight.position.set(0, 0, 0)
-    dirLight.position.set(0, 0, 0)
-    ponLight.position.set(0, 0, 0)
-    add(amdLight);		    // 环境光
-    add(dirLight);		    // 方向光
-    add(ponLight);			// 点光源
+function initLight() {
+  amdLight = new THREE.AmbientLight("#ccc");
+  dirLight = new THREE.DirectionalLight("#ccc");
+  ponLight = new THREE.PointLight("#ccc");
+  amdLight.position.set(0, 0, 0);
+  dirLight.position.set(0, 0, 0);
+  ponLight.position.set(0, 0, 0);
+  add(amdLight); // 环境光
+  add(dirLight); // 方向光
+  add(ponLight); // 点光源
 }
 // 渲染器
-function initRenderer(){
-    renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-    })
-    renderer.setClearColor(0x4682B4, 1.0);
-    renderer.setClearAlpha(0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(width, height);
-    // 开启阴影支持
-    renderer.shadowMap.enabled = true;
-    // 阴影类型
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    (document.querySelector('.webglDom') as HTMLElement).appendChild(renderer.domElement);
-    render();
+function initRenderer() {
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setClearColor(0x4682b4, 1.0);
+  renderer.setClearAlpha(0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(width, height);
+  // 开启阴影支持
+  renderer.shadowMap.enabled = true;
+  // 阴影类型
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  (document.querySelector(".webglDom") as HTMLElement).appendChild(
+    renderer.domElement
+  );
+  render();
 }
 /**
  * 创建 BSP 镂空几何
- * @param l 
- * @param h 
- * @param w 
- * @param x 
- * @param y 
- * @param z 
+ * @param l
+ * @param h
+ * @param w
+ * @param x
+ * @param y
+ * @param z
  */
-function initBSP(l: number, h: number, w: number, x: number, y: number, z: number){
-    let geometry = new THREE.BoxGeometry(l, h, w);
-    let mesh = new THREE.Mesh(geometry)
-    mesh.position.set(x, y, z)
-    return new ThreeBSP(mesh);
-}
-/**
- * 创建门、门框及贴图，添加到场景
- */
-function createDoor(){
-    let frameBSP = initBSP(150, 230, 6, 0, 0, 0)   // 门框
-    let doorBSP = initBSP(130, 220, 6, 0, -5, 0)   // 门占位
-    let resultBSP = frameBSP.subtract(doorBSP); // 取交集
-    let result = resultBSP.toMesh();        // 相交部分转换为mesh
-    let boxGeometry = result.geometry;      // 转成geometry
-    let boxMaterial = new THREE.MeshLambertMaterial({     // 添加材质
-        color: '#aaa'
-    });
-    let wallMesh = new THREE.Mesh(boxGeometry, boxMaterial);
-    add(wallMesh);
-
-    // 门
-    let loader = new THREE.TextureLoader();
-    loader.load(doorImg, function (texture) {
-        const geometry = new THREE.BoxGeometry(130, 220, 2);
-        const material = new THREE.MeshLambertMaterial({
-            color: '#ccc',
-            map: texture
-        });
-        material.transparent = true;
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(-65, -5, -2);
-        dummy.add(mesh)
-        dummy.position.set(65, 0, 0);
-        dummy.name = 'door'
-        add(dummy);
-        (document.querySelector('.webglDom') as HTMLElement).addEventListener("click", onClick, false);
-        (document.querySelector('.webglDom') as HTMLElement).addEventListener("touchstart", onClick, false);
-    })
+function initBSP(
+  l: number,
+  h: number,
+  w: number,
+  x: number,
+  y: number,
+  z: number
+) {
+  let geometry = new THREE.BoxGeometry(l, h, w);
+  let mesh = new THREE.Mesh(geometry);
+  mesh.position.set(x, y, z);
+  return new ThreeBSP(mesh);
 }
 /**
  * 门的点击事件
- * @param event 
+ * @param event
  */
-function onClick(event: any){
-    event = $Utils.Tools.isMobile() ? event.changedTouches[0] : event
-    // event.preventDefault();
-    // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 to +1)
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouse, camera);
-    let intersects = raycaster.intersectObjects(scene.children, true);
-    let door = scene.getObjectByName('door') as THREE.Object3D
-    if (intersects.length > 0) {
-        if (isOpenDoor) {
-            // door.rotation.y -= 0.25*Math.PI;
-            let param = { y: 0 }
-            let openDoor = new TWEEN.Tween(param)
-            openDoor.to({ y: -0.25 * Math.PI }, 1000);
-            openDoor.easing(TWEEN.Easing.Elastic.Out);
-            openDoor.onUpdate(function () {
-                door.rotation.set(0, param.y, 0);
-            }).start();
-            isOpenDoor = false;
-        } else {
-            // door.rotation.y += 0.25*Math.PI;
-            let param = { y: -0.25 * Math.PI }
-            let closeDoor = new TWEEN.Tween(param)
-            closeDoor.to({ y: 0 }, 1000);
-            closeDoor.easing(TWEEN.Easing.Elastic.Out);
-            closeDoor.onUpdate(function () {
-                door.rotation.set(0, param.y, 0);
-            }).start();
-            isOpenDoor = true;
-        }
-    }
-}
+const onClick = (event: any) => {
+  event = Is.isMobile() ? event.changedTouches[0] : event;
+  // event.preventDefault();
+  // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 to +1)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  let intersects: any = raycaster.intersectObjects(scene.children, true);
+  let model = intersects[0]?.object;
+  // console.log(model, model.name)
+  if (intersects.length > 0 && model.name) {
+    let box = scene.getObjectByName(model.name) as THREE.Mesh;
+    // 动画形式参考 https://tweenjs.github.io/tween.js/examples/03_graphs.html
+    if (!model.animat) return;
+    let originPosition = {
+      x: model.initPosition.x,
+      y: model.initPosition.y,
+      z: model.initPosition.z,
+      tx: 0,
+      ty: 0,
+      tz: 0,
+    };
+    let targetPosition = {
+      x: model.animat.x,
+      y: model.animat.y,
+      z: model.animat.z,
+      tx: model.animat.tx,
+      ty: model.animat.ty,
+      tz: model.animat.tz,
+    };
+    let openBox = new TWEEN.Tween(
+      model.isOpenAnimat ? originPosition : targetPosition
+    )
+      .to(
+        model.isOpenAnimat ? targetPosition : originPosition,
+        model.animatTime || 1000
+      )
+      .easing(TWEEN.Easing.Linear.None)
+      .onUpdate(function (this: any) {
+        box.rotation.set(this.tx, this.ty, this.tz);
+        box.position.set(this.x, this.y, this.z);
+      })
+      .start();
+    model.isOpenAnimat = !model.isOpenAnimat;
+  }
+};
+/**
+ * 创建 BSP 镂空box
+ * @param boxDetail
+ */
+const createBSPBox = (boxDetail: bspDetailModel) => {
+  let frameBSP = initBSP(
+    boxDetail.l,
+    boxDetail.w,
+    boxDetail.h,
+    boxDetail.x,
+    boxDetail.y,
+    boxDetail.z
+  ); // 门框
+  let doorBSP = initBSP(
+    boxDetail.l2,
+    boxDetail.w2,
+    boxDetail.h2,
+    boxDetail.x2,
+    boxDetail.y2,
+    boxDetail.z2
+  ); // 门占位
+  let resultBSP = frameBSP.subtract(doorBSP); // 取交集
+  let result = resultBSP.toMesh(); // 相交部分转换为mesh
+  let boxGeometry = result.geometry; // 转成geometry
+  let boxMaterial = new THREE.MeshLambertMaterial({
+    // 添加材质
+    color: boxDetail.color || "#999",
+  });
+  let wallMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+  wallMesh.position.set(boxDetail.x, boxDetail.y, boxDetail.z);
+  add(wallMesh);
+};
 /**
  * 创建一个物体，添加到场景
- * @param length 长
- * @param height 高
- * @param width 宽
- * @param color 颜色
- * @param x 
- * @param y 
- * @param z 
+ * @param boxDetail
  */
-function addBox(length: number, height: number, width: number, color: any, x: number, y: number, z: number) {
-    const geometry = new THREE.BoxGeometry(length, height, width);
+const addBox = (boxDetail: boxDetailModel) => {
+  const cBox = (texture?: THREE.Texture) => {
+    const geometry = new THREE.BoxGeometry(
+      boxDetail.l,
+      boxDetail.h,
+      boxDetail.w
+    );
     const material = new THREE.MeshLambertMaterial({
-        color: color
+      color: boxDetail.color,
+      map: texture,
     });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x, y, z);
+    material.transparent = true;
+    const mesh: any = new THREE.Mesh(geometry, material);
+    mesh.position.set(boxDetail.x, boxDetail.y, boxDetail.z);
+    mesh.name = boxDetail.name; // 可通过 scene.getObjectByName('name') 获取材质
+    mesh.animat = boxDetail.animat;
+    mesh.isOpenAnimat = true;
+    mesh.animatTime = boxDetail.animatTime;
+    mesh.initPosition = { x: boxDetail.x, y: boxDetail.y, z: boxDetail.z };
     add(mesh);
-}
+    window.addEventListener(
+      Is.isMobile() ? "touchend" : "click",
+      onClick,
+      false
+    );
+  };
+  if (!boxDetail.img) return cBox();
+  let loader = new THREE.TextureLoader(); // 纹理贴图
+  loader.load(boxDetail.img as string, (texture) => {
+    cBox(texture);
+  });
+};
+
+const createBox = () => {
+  addBox({
+    l: 100,
+    w: 100,
+    h: 100,
+    x: 0,
+    y: -150,
+    z: -100,
+    name: "box1",
+    color: "#939",
+    animat: { x: 100, y: 100, z: 0, tx: 0, ty: 0, tz: 2 },
+  });
+  addBox({
+    l: 100,
+    w: 100,
+    h: 100,
+    x: -120,
+    y: -150,
+    z: -100,
+    name: "box2",
+    color: "#39f",
+    animat: { x: 50, y: 50, z: 50, tx: 2, ty: 2, tz: 2 },
+    animatTime: 3000,
+  });
+  addBox({
+    l: 100,
+    w: 100,
+    h: 100,
+    x: 120,
+    y: -150,
+    z: -100,
+    name: "box3",
+    img: img1,
+  });
+  createBSPBox({
+    l: 150,
+    w: 230,
+    h: 6,
+    x: 0,
+    y: 100,
+    z: -100,
+    l2: 130,
+    w2: 220,
+    h2: 6,
+    x2: 0,
+    y2: 95,
+    z2: -100,
+    color: "#ccc",
+  });
+  addBox({
+    l: 130,
+    w: 2,
+    h: 220,
+    x: 0,
+    y: 95,
+    z: -100,
+    name: "door",
+    img: doorImg,
+    animat: { x: 20, y: 95, z: -150, tx: 0, ty: -0.25 * Math.PI, tz: 0 },
+    animatTime: 300,
+  });
+};
+
 /**
  * 向场景添加一个物体
- * @param obj 
+ * @param obj
  */
 function add(obj: THREE.Object3D) {
-    scene.add(obj);
+  scene.add(obj);
 }
 function render() {
-    let vector = camera.position.clone();
-    ponLight.position.set(vector.x, vector.y, vector.z); //点光源位置
-    renderer.render(scene, camera);
-    TWEEN.update();
-    closeDoorAnimation = requestAnimationFrame(render);
+  let vector = camera.position.clone();
+  ponLight.position.set(vector.x, vector.y, vector.z); //点光源位置
+  renderer.render(scene, camera);
+  TWEEN.update();
+  closeDoorAnimation = requestAnimationFrame(render);
 }
 function initDoor() {
-    initScene()
-    initCamera()
-    initLight()
-    createDoor()
-    initRenderer()
-    initControls()
+  initScene();
+  initCamera();
+  initLight();
+  createBox();
+  initRenderer();
+  initControls();
 }
 
-let closeStarAnimation: Function
+let closeStarAnimation: Function;
 onMounted(() => {
-    nextTick(() => {
-        closeStarAnimation = initStar(document.querySelector('.starryPage') as HTMLElement)
-        initDoor()
-    })
-})
+  nextTick(() => {
+    closeStarAnimation = initStar(
+      document.querySelector(".starryPage") as HTMLElement
+    );
+    initDoor();
+  });
+});
 
 onUnmounted(() => {
-    window.cancelAnimationFrame(closeDoorAnimation)
-    closeStarAnimation()
-})
-
+  window.cancelAnimationFrame(closeDoorAnimation);
+  closeStarAnimation();
+});
 </script>
 
 <style lang="scss" scoped>
 .starryPage {
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+  .webglDom {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    overflow: hidden;
-
-    .webglDom {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+  }
 }
 </style>

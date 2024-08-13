@@ -110,8 +110,16 @@
         {{ v.num1 }} {{ v.sym }} {{ v.num2 }} =
         <div>
           <input type="text" v-model="v.answer" :disabled="isSuspend" />
-          <van-icon name="success" class="check" v-if="isAccomplish && v.correct" />
-          <van-icon name="cross" class="close" v-if="isAccomplish && !v.correct" />
+          <van-icon
+            name="success"
+            class="check"
+            v-if="isAccomplish && v.correct"
+          />
+          <van-icon
+            name="cross"
+            class="close"
+            v-if="isAccomplish && !v.correct"
+          />
           <span class="rightAnswers" v-if="isAccomplish && !v.correct">{{
             v.rightAnswers
           }}</span>
@@ -132,22 +140,22 @@ import {
   randomModel,
 } from "./DataModel/TopicPageData";
 
-const value1 = ref<number>(0);            // 范围
-const value2 = ref<string>("");           // 算法
-const value3 = ref<number>(0);            // 题数
-const value4 = ref<string>("");           // 计时时间
-const radio = ref<string>("");            // 是否计时
-const remainingTime = ref<string>("");    // 剩余时间
-const beginAnswer = ref<boolean>(false);  // 是否开始答题
-const nowDate = ref<string>("");          // 当前时间
+const value1 = ref<number>(0); // 范围
+const value2 = ref<string>(""); // 算法
+const value3 = ref<number>(0); // 题数
+const value4 = ref<string>(""); // 计时时间
+const radio = ref<string>(""); // 是否计时
+const remainingTime = ref<string>(""); // 剩余时间
+const beginAnswer = ref<boolean>(false); // 是否开始答题
+const nowDate = ref<string>(""); // 当前时间
 const symbolLsit1 = ref<Array<string>>(["+", "-"]);
 const symbolLsit2 = ref<Array<string>>(["×", "÷"]);
-const topicLsit = ref<Array<any>>([]);    // 题目列表
+const topicLsit = ref<Array<any>>([]); // 题目列表
 const isAccomplish = ref<boolean>(false); // 是否显示对错提示box
-const rightNum = ref<number>(0);          // 答对题目的数量
+const rightNum = ref<number>(0); // 答对题目的数量
 let timer: any = null;
-let isSuspend = ref<boolean>(false);      // 是否暂停
-let lastDate = ref<string>("");           // 加上倒计时后的时间
+let isSuspend = ref<boolean>(false); // 是否暂停
+let lastDate = ref<string>(""); // 加上倒计时后的时间
 
 /**
  * 确定生成题目
@@ -310,7 +318,11 @@ function patch(str: number) {
  * @param sym 计算方式
  */
 
-function getRandom(num: number, type?: number, sym?: string): randomModel | number {
+function getRandom(
+  num: number,
+  type?: number,
+  sym?: string
+): randomModel | number {
   if (sym == "×") {
     let random1 = Math.round(Math.random() * num);
     let random2 = Math.round(Math.random() * num);
@@ -361,11 +373,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  clearInterval(timer)
-})
+  clearInterval(timer);
+});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .Topic {
   width: 100%;
   height: 100%;

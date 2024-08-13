@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, defineExpose, inject } from 'vue'
+import { ref, inject } from 'vue'
 const age = inject('ageKey')
 console.log(age)
 const props = defineProps({
